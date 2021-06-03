@@ -2,9 +2,13 @@ package entities.ships;
 
 import entities.Prototype;
 import entities.Shot;
+import lombok.Getter;
 
-import java.awt.*;
 
+import java.awt.Point;
+import java.awt.Dimension;
+
+@Getter
 abstract public class Ship extends Prototype {
 
     private final String RED_LASER_PATH = "";

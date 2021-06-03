@@ -12,7 +12,7 @@ abstract public class Prototype {
     private Image sprite;
     private String spritePath;
     private Point position;
-    private Point movementVector;//Speed
+    private Point movementVector; //Speed vector
     private Dimension size;
 
     public Prototype(String spritePath, Point position, Point movementVector, Dimension size) {
