@@ -7,13 +7,12 @@ public class Asteroid extends Prototype{
         super(spritePath, position, movementVector, size);
     }
 
-    @Override
-    public void move() {
-
+    public Asteroid(Asteroid copy) {
+        super(copy.getSpritePath(), copy.getPosition(), copy.getMovementVector(), copy.getSize());
     }
 
     @Override
     public Prototype clone() {
-        return null;
+        return new Asteroid(this);
     }
 }

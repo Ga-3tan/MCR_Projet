@@ -1,5 +1,7 @@
 package entities;
 
+import entities.ships.Ship;
+
 import java.awt.*;
 
 public class Shot extends Prototype{
@@ -10,13 +12,15 @@ public class Shot extends Prototype{
         this.friendly = friendly;
     }
 
-    @Override
-    public void move() {
-
+    public Shot(Shot copy) {
+        super(copy.getSpritePath(), copy.getPosition(), copy.getMovementVector(), copy.getSize());
+        this.friendly = copy.friendly;
     }
 
     @Override
     public Prototype clone() {
-        return null;
+        return new Shot(this);
     }
 }
+
+// ಠ_ಠ   ⊂◉‿◉つ

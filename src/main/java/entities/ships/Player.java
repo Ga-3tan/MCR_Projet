@@ -15,18 +15,22 @@ public class Player extends Ship {
         super(SPRITE_PATH, position, movementVector, size, hp);
     }
 
-    @Override
-    public void move() {
-
+    public Player(Player copy) {
+        super(SPRITE_PATH, copy.getPosition(), copy.getMovementVector(), copy.getSize(), copy.getHp());
     }
+
+    /* move() appelé hors de la game loop */
 
     @Override
     public Prototype clone() {
-        return null;
+        return new Player(this);
     }
 
     @Override
     public Shot fire() {
-        return null;
+        Shot shot = (Shot) greenLaser.clone();
+        greenLaser.setMovementVector(new Point(0,-10)); // 0, -10 => va vers le haut
+        greenLaser.setPosition(this.getPosition());
+        return shot;
     }
 }

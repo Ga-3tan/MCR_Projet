@@ -22,6 +22,9 @@ public class Enemy extends Ship{
 
     @Override
     public Shot fire() {
-        return null;
+        Shot shot = (Shot) redLaser.clone();
+        greenLaser.setMovementVector(new Point(0,6)); // 0, 6 => va vers le haut
+        greenLaser.setPosition(this.getPosition());
+        return shot;
     }
 }
