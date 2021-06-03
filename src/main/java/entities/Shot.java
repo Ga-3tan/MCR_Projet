@@ -3,8 +3,11 @@ package entities;
 import java.awt.*;
 
 public class Shot extends Prototype{
-    public Shot(Image sprite, Point position, Point movementVector, Dimension size) {
-        super(sprite, position, movementVector, size);
+    private Ship friendly = null;
+
+    public Shot(String spritePath, Point position, Point movementVector, Dimension size, Ship friendly) {
+        super(spritePath, position, movementVector, size);
+        this.friendly = friendly;
     }
 
     @Override
