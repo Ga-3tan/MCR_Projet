@@ -17,7 +17,7 @@ public class Enemy extends Ship{
 
     @Override
     public Prototype clone() {
-        return null;
+        return new Enemy(this);
     }
 
     @Override
