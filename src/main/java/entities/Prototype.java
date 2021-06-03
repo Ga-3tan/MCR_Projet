@@ -9,6 +9,14 @@ abstract public class Prototype {
     private Point movementVector;//Speed
     private Dimension size;
 
+    public Prototype(Image sprite, Point position, Point movementVector, Dimension size) {
+        this.sprite = sprite;
+        this.position = position;
+        this.movementVector = movementVector;
+        this.size = size;
+    }
+
+
     public abstract void move();
     public abstract Prototype clone();
 
