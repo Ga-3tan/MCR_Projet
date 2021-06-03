@@ -14,6 +14,7 @@ abstract public class Prototype {
     private Point position;
     private Point movementVector; //Speed vector
     private Dimension size;
+    private Rectangle hitbox; // on utilise .intersects(Rectangle r) pour check la collision
 
     public Prototype(String spritePath, Point position, Point movementVector, Dimension size) {
         Toolkit toolkit = Toolkit.getDefaultToolkit();
@@ -23,6 +24,7 @@ abstract public class Prototype {
         this.position = position;
         this.movementVector = movementVector;
         this.size = size;
+        this.hitbox = new Rectangle(position.x, position.y, (int) size.getWidth(), (int) size.getHeight());
     }
 
     public void move() {
@@ -30,6 +32,7 @@ abstract public class Prototype {
                 this.getPosition().x + this.getMovementVector().x,
                 this.getPosition().y + this.getMovementVector().y)
         );
+        hitbox.setLocation(this.getPosition());
     }
 
     public abstract Prototype clone();
