@@ -9,8 +9,7 @@ import entities.Asteroid;
 
 import java.awt.*;
 import java.util.LinkedList;
-import javax.swing.JFrame;
-import javax.swing.Timer;
+import javax.swing.*;
 
 
 public class Controller{
@@ -22,7 +21,7 @@ public class Controller{
     private final InfoPanel infoPanel = new InfoPanel(this);
    // private final Timer gameTimer;
     private int score;
-    private static final Dimension DIMENSION = new Dimension(576, 1024);
+    private static final Dimension DIMENSION = new Dimension(512, 1024);
 
     // Elements du jeu
     private final Ship player;
@@ -38,14 +37,13 @@ public class Controller{
 
         // Initialise les frames et panels
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLayout(new GridLayout(2,1));
-        frame.add(infoPanel);
-        frame.add(displayPanel);
-
-        frame.pack();
+        frame.setLayout(new BorderLayout());
+        frame.add(infoPanel, BorderLayout.NORTH);
+        frame.add(displayPanel, BorderLayout.SOUTH);
         frame.setPreferredSize(DIMENSION);
         frame.setVisible(true);
-
+        frame.setResizable(false);
+        frame.pack();
         initializePrototypes();
 
 //        int speed = 0;
