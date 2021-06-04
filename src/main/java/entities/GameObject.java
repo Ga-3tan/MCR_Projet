@@ -7,7 +7,7 @@ import java.awt.*;
 
 @Getter
 @Setter
-abstract public class Prototype {
+abstract public class GameObject {
 
     private Image sprite;
     private String spritePath;
@@ -16,9 +16,9 @@ abstract public class Prototype {
     private Dimension size;
     private Rectangle hitbox; // on utilise .intersects(Rectangle r) pour check la collision
 
-    public Prototype(String spritePath, Point position, Point movementVector, Dimension size) {
+    public GameObject(String spritePath, Point position, Point movementVector, Dimension size) {
         Toolkit toolkit = Toolkit.getDefaultToolkit();
-        Image image = toolkit.getImage(spritePath);
+        Image image = toolkit.getImage(spritePath).getScaledInstance(size.width, size.height, Image.SCALE_DEFAULT);;
         this.spritePath = spritePath;
         this.sprite = image;
         this.position = position;
@@ -35,6 +35,6 @@ abstract public class Prototype {
         hitbox.setLocation(this.getPosition());
     }
 
-    public abstract Prototype clone();
+    public abstract GameObject clone();
 
 }
