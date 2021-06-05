@@ -4,7 +4,7 @@ import entities.ships.Ship;
 
 import java.awt.*;
 
-public class Shot extends Prototype{
+public class Shot extends GameObject {
     private Ship friendly = null;
 
     public Shot(String spritePath, Point position, Point movementVector, Dimension size, Ship friendly) {
@@ -18,9 +18,9 @@ public class Shot extends Prototype{
     }
 
     @Override
-    public Prototype clone() {
+    public GameObject clone() {
         return new Shot(this);
     }
 }
 
-// ಠ_ಠ   ⊂◉‿◉つ
+// ಠ_ಠ   ⊂◉‿◉つ (╯✧▽✧)╯

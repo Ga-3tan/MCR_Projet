@@ -1,6 +1,6 @@
 package entities.ships;
 
-import entities.Prototype;
+import entities.GameObject;
 import entities.Shot;
 
 import java.awt.*;
@@ -22,7 +22,7 @@ public class Player extends Ship {
     /* move() appelé hors de la game loop */
 
     @Override
-    public Prototype clone() {
+    public GameObject clone() {
         return new Player(this);
     }
 

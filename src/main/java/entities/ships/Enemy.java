@@ -1,6 +1,6 @@
 package entities.ships;
 
-import entities.Prototype;
+import entities.GameObject;
 import entities.Shot;
 
 import java.awt.*;
@@ -16,7 +16,7 @@ public class Enemy extends Ship{
     }
 
     @Override
-    public Prototype clone() {
+    public GameObject clone() {
         return new Enemy(this);
     }
 

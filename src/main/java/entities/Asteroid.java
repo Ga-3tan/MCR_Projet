@@ -2,7 +2,7 @@ package entities;
 
 import java.awt.*;
 
-public class Asteroid extends Prototype{
+public class Asteroid extends GameObject {
     public Asteroid(String spritePath, Point position, Point movementVector, Dimension size) {
         super(spritePath, position, movementVector, size);
     }
@@ -12,7 +12,7 @@ public class Asteroid extends Prototype{
     }
 
     @Override
-    public Prototype clone() {
+    public GameObject clone() {
         return new Asteroid(this);
     }
 }

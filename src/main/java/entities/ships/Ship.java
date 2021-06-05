@@ -1,6 +1,6 @@
 package entities.ships;
 
-import entities.Prototype;
+import entities.GameObject;
 import entities.Shot;
 import lombok.Getter;
 
@@ -9,7 +9,7 @@ import java.awt.Point;
 import java.awt.Dimension;
 
 @Getter
-abstract public class Ship extends Prototype {
+abstract public class Ship extends GameObject {
 
     private final String RED_LASER_PATH = "";
     private final String GREEN_LASER_PATH = "";
