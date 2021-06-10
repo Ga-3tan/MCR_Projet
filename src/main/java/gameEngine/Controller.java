@@ -53,23 +53,28 @@ public class Controller{
         int pause = 0;
 
         // Initialise le timer de jeu
-        int delay = 10; //milliseconds
-        ActionListener taskPerformer = new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
+        new Timer(10, evt -> update()).start();
+        new Timer(1000, evt -> spawnGameObject()).start();
+    }
 
-                // Spawn les clones d'asteroides (aléatoirement)
-                spawnAsteroids();
-                // Pour chaque asteroide, le supprime s'il est hors de l'interface
-                decorElements.removeIf(decor -> decor.isOutOf(frame.getHeight()));
-                // Bouge les asteroides
-                for(GameObject decor : decorElements){
-                    decor.move();
-                }
+    /**
+     * Fonction apelée à chaque frame
+     */
+    private void update() {
+        // Pour chaque asteroide, le supprime s'il est hors de l'interface
+        decorElements.removeIf(decor -> decor.isOutOf(frame.getHeight()));
 
-                displayPanel.repaint();
-            }
-        };
-        new Timer(delay, taskPerformer).start();
+        // Bouge les asteroides
+        for(GameObject decor : decorElements){
+            decor.move();
+        }
+
+        displayPanel.repaint();
+    }
+
+    private void spawnGameObject() {
+        // Spawn les clones d'asteroides (aléatoirement)
+        spawnAsteroids();
     }
 
     public static Controller getInstance() {
@@ -82,8 +87,10 @@ public class Controller{
     private void initializePrototypes() {
         // initialiser tous les prototypes
 //        asteroid = new Asteroid();
-        asteroidsPrototypes.add(new Asteroid(new Dimension(50,50)));
-        asteroidsPrototypes.add(new Asteroid(new Dimension(25,25)));
+        asteroidsPrototypes.add(new Asteroid(new Dimension(90,90), new Point(0, 2)));
+        asteroidsPrototypes.add(new Asteroid(new Dimension(75,75), new Point(0, 4)));
+        asteroidsPrototypes.add(new Asteroid(new Dimension(50,50), new Point(0, 2)));
+        asteroidsPrototypes.add(new Asteroid(new Dimension(25,25), new Point(0, 4)));
     }
 
     /**
@@ -91,7 +98,9 @@ public class Controller{
      * */
     private void spawnAsteroids(){
 
-        int chanceToSpawn = 5; // 5/1000, toutes les 10 milisecondes -> delay du Timer
+        //int chanceToSpawn = 1000; // 5/1000, toutes les 10 milisecondes -> delay du Timer
+        Random rand = new Random();
+
 
         for(Asteroid asteroidPrototype : asteroidsPrototypes){
             Random rand = new Random();
@@ -100,7 +109,6 @@ public class Controller{
 
                 GameObject copy = asteroidPrototype.clone();
                 copy.randomizePositionOnX(frame.getWidth());
-                copy.randomizeSpeed();
 
                 decorElements.add(copy);
             }
@@ -122,5 +130,4 @@ public class Controller{
         gameObjects.addAll(decorElements);
         return gameObjects;
     }
-
 }
