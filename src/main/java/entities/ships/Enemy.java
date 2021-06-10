@@ -7,6 +7,11 @@ import java.awt.*;
 
 public class Enemy extends Ship{
 
+    private static final String BLACK_ENEMY_PATH ="images\\PNG\\Enemies\\enemyBlack3.png";
+    private static final String BLUE_ENEMY_PATH="images\\PNG\\Enemies\\enemyBlue5.png";
+    private static final String GREEN_ENEMY_PATH="images\\PNG\\Enemies\\enemyGreen2.png";
+    private static final String ORANGE_ENEMY_PATH="images\\PNG\\Enemies\\enemyRed4.png";
+
     public Enemy(String spritePath, Point position, Point movementVector, Dimension size, int hp) {
         super(spritePath, position, movementVector, size, hp);
     }
