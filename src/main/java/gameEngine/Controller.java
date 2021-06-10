@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 import javax.swing.*;
 
 
@@ -27,11 +28,12 @@ public class Controller{
     // Elements du jeu
     private final Ship player;
     private final LinkedList<Ship> enemies = new LinkedList<>();
+    private final LinkedList<GameObject> decorElements = new LinkedList<>();
 
     // Prototypes
     private final LinkedList<Ship> shipPrototypes = new LinkedList<>();
     private final LinkedList<Asteroid> asteroidsPrototypes = new LinkedList<>();
-    private Asteroid asteroid;
+
 
     private Controller() {
         this.player = new Player(new Point(231, 920), new Point(0,0), new Dimension(50,50), 500);
@@ -54,6 +56,16 @@ public class Controller{
         int delay = 10; //milliseconds
         ActionListener taskPerformer = new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
+
+                // Spawn les clones d'asteroides (aléatoirement)
+                spawnAsteroids();
+                // Pour chaque asteroide, le supprime s'il est hors de l'interface
+                decorElements.removeIf(decor -> decor.isOutOf(frame.getHeight()));
+                // Bouge les asteroides
+                for(GameObject decor : decorElements){
+                    decor.move();
+                }
+
                 displayPanel.repaint();
             }
         };
@@ -70,7 +82,29 @@ public class Controller{
     private void initializePrototypes() {
         // initialiser tous les prototypes
 //        asteroid = new Asteroid();
-        asteroidsPrototypes.add(asteroid);
+        asteroidsPrototypes.add(new Asteroid(new Dimension(50,50)));
+        asteroidsPrototypes.add(new Asteroid(new Dimension(25,25)));
+    }
+
+    /**
+     * Créer des clones des prototypes d'asteroides de maniere aleatoire
+     * */
+    private void spawnAsteroids(){
+
+        int chanceToSpawn = 5; // 5/1000, toutes les 10 milisecondes -> delay du Timer
+
+        for(Asteroid asteroidPrototype : asteroidsPrototypes){
+            Random rand = new Random();
+            int randomSpawn = rand.nextInt(1000);
+            if(randomSpawn < chanceToSpawn) {
+
+                GameObject copy = asteroidPrototype.clone();
+                copy.randomizePositionOnX(frame.getWidth());
+                copy.randomizeSpeed();
+
+                decorElements.add(copy);
+            }
+        }
     }
 
     public int score() {
@@ -85,6 +119,7 @@ public class Controller{
     public List<GameObject> getAllGameObjects() {
         List<GameObject> gameObjects = new LinkedList<>();
         gameObjects.add(player);
+        gameObjects.addAll(decorElements);
         return gameObjects;
     }
 
