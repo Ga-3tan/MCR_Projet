@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 import javax.swing.*;
 
 
@@ -27,11 +28,12 @@ public class Controller{
     // Elements du jeu
     private final Ship player;
     private final LinkedList<Ship> enemies = new LinkedList<>();
+    private final LinkedList<GameObject> decorElements = new LinkedList<>();
 
     // Prototypes
     private final LinkedList<Ship> shipPrototypes = new LinkedList<>();
     private final LinkedList<Asteroid> asteroidsPrototypes = new LinkedList<>();
-    private Asteroid asteroid;
+
 
     private Controller() {
         this.player = new Player(new Point(231, 920), new Point(0,0), new Dimension(50,50), 500);
@@ -51,13 +53,28 @@ public class Controller{
         int pause = 0;
 
         // Initialise le timer de jeu
-        int delay = 10; //milliseconds
-        ActionListener taskPerformer = new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                displayPanel.repaint();
-            }
-        };
-        new Timer(delay, taskPerformer).start();
+        new Timer(10, evt -> update()).start();
+        new Timer(1000, evt -> spawnGameObject()).start();
+    }
+
+    /**
+     * Fonction apelée à chaque frame
+     */
+    private void update() {
+        // Pour chaque asteroide, le supprime s'il est hors de l'interface
+        decorElements.removeIf(decor -> decor.isOutOf(frame.getHeight()));
+
+        // Bouge les asteroides
+        for(GameObject decor : decorElements){
+            decor.move();
+        }
+
+        displayPanel.repaint();
+    }
+
+    private void spawnGameObject() {
+        // Spawn les clones d'asteroides (aléatoirement)
+        spawnAsteroids();
     }
 
     public static Controller getInstance() {
@@ -70,7 +87,32 @@ public class Controller{
     private void initializePrototypes() {
         // initialiser tous les prototypes
 //        asteroid = new Asteroid();
-        asteroidsPrototypes.add(asteroid);
+        asteroidsPrototypes.add(new Asteroid(new Dimension(90,90), new Point(0, 2)));
+        asteroidsPrototypes.add(new Asteroid(new Dimension(75,75), new Point(0, 4)));
+        asteroidsPrototypes.add(new Asteroid(new Dimension(50,50), new Point(0, 2)));
+        asteroidsPrototypes.add(new Asteroid(new Dimension(25,25), new Point(0, 4)));
+    }
+
+    /**
+     * Créer des clones des prototypes d'asteroides de maniere aleatoire
+     * */
+    private void spawnAsteroids(){
+
+        //int chanceToSpawn = 1000; // 5/1000, toutes les 10 milisecondes -> delay du Timer
+        Random rand = new Random();
+
+
+        for(Asteroid asteroidPrototype : asteroidsPrototypes){
+            Random rand = new Random();
+            int randomSpawn = rand.nextInt(1000);
+            if(randomSpawn < chanceToSpawn) {
+
+                GameObject copy = asteroidPrototype.clone();
+                copy.randomizePositionOnX(frame.getWidth());
+
+                decorElements.add(copy);
+            }
+        }
     }
 
     public int score() {
@@ -85,7 +127,7 @@ public class Controller{
     public List<GameObject> getAllGameObjects() {
         List<GameObject> gameObjects = new LinkedList<>();
         gameObjects.add(player);
+        gameObjects.addAll(decorElements);
         return gameObjects;
     }
-
 }

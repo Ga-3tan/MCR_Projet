@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.awt.*;
+import java.util.Random;
 
 @Getter
 @Setter
@@ -15,6 +16,9 @@ abstract public class GameObject {
     private Point movementVector; //Speed vector
     private Dimension size;
     private Rectangle hitbox; // on utilise .intersects(Rectangle r) pour check la collision
+
+    Random rand = new Random();
+
 
     public GameObject(String spritePath, Point position, Point movementVector, Dimension size) {
         Toolkit toolkit = Toolkit.getDefaultToolkit();
@@ -36,5 +40,32 @@ abstract public class GameObject {
     }
 
     public abstract GameObject clone();
+
+    /**
+     * Vérifie si la position du gameObject est hors de l'interface verticalement
+     * @return true s'il est hors de l'interface, false sinon
+     * */
+    public boolean isOutOf(int yBoundary){
+        return this.getPosition().y + this.getSize().height > yBoundary
+                ||this.getPosition().y + this.getSize().height < 0;
+    }
+
+    /**
+     * Donne une valeur aléatoire sur l'axe X
+     * */
+    public void randomizePositionOnX(int frameWidth){
+        int x = rand.nextInt(frameWidth+getSize().width) - getSize().width;
+        this.setPosition(new Point(x, -getSize().height));
+    }
+
+    /**
+     * Donne une vitesse aléatoire
+     * TODO (à modifier)
+     * */
+    public void randomizeSpeed(){
+        // TODO changer movementVector en Point2D pour plus de précision dans l'intervalle ?
+        int dy = rand.nextInt(2) + 1; // varie entre 1 et 2, ce n'est pas beaucoup
+        this.setMovementVector(new Point(0, dy));
+    }
 
 }
