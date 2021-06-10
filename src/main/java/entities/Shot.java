@@ -1,9 +1,13 @@
 package entities;
 
 import entities.ships.Ship;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.awt.*;
 
+@Getter
+@Setter
 public class Shot extends GameObject {
     private Ship friendly = null;
 

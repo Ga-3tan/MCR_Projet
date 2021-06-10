@@ -4,22 +4,22 @@ import entities.GameObject;
 import entities.Shot;
 
 import java.awt.*;
+import java.util.Date;
 
 
 public class Player extends Ship {
+    private static final String PLAYER_PATH = "images/PNG/playerShip2_green.png";
+    static final int SHOOT_DELAY = 300;
 
-    private static final String SPRITE_PATH = "images/PNG/playerShip2_green.png";
-
+    long lastShotTime = 0;
 
     public Player(Point position, Point movementVector, Dimension size, int hp) {
-        super(SPRITE_PATH, position, movementVector, size, hp);
+        super(PLAYER_PATH, position, movementVector, size, hp);
     }
 
     public Player(Player copy) {
-        super(SPRITE_PATH, copy.getPosition(), copy.getMovementVector(), copy.getSize(), copy.getHp());
+        super(PLAYER_PATH, copy.getPosition(), copy.getMovementVector(), copy.getSize(), copy.getHp());
     }
-
-    /* move() appelé hors de la game loop */
 
     @Override
     public GameObject clone() {
@@ -28,9 +28,17 @@ public class Player extends Ship {
 
     @Override
     public Shot fire() {
-        Shot shot = (Shot) greenLaser.clone();
-        greenLaser.setMovementVector(new Point(0,-10)); // 0, -10 => va vers le haut
-        greenLaser.setPosition(this.getPosition());
-        return shot;
+        if (new Date().getTime() - lastShotTime > SHOOT_DELAY) {
+            lastShotTime = new Date().getTime();
+
+            Shot shot = (Shot) greenLaser.clone();
+            shot.setFriendly(this);
+            shot.setMovementVector(new Point(0, -12)); // 0, -12 => va vers le haut
+            shot.setPosition(new Point(this.getPosition().x + (int) (this.getSize().getWidth() / 2), this.getPosition().y));
+
+            return shot;
+        } else {
+            return null;
+        }
     }
 }

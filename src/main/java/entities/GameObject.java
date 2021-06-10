@@ -33,10 +33,10 @@ abstract public class GameObject {
 
     public void move() {
         this.setPosition(new Point(
-                this.getPosition().x + this.getMovementVector().x,
-                this.getPosition().y + this.getMovementVector().y)
+                (int) (this.getPosition().getX() + this.getMovementVector().getX()),
+                (int) (this.getPosition().getY() + this.getMovementVector().getY()))
         );
-        hitbox.setLocation(this.getPosition());
+        this.getHitbox().setLocation(this.getPosition());
     }
 
     public abstract GameObject clone();
