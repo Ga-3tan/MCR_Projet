@@ -1,6 +1,7 @@
 package gameEngine;
 
 import entities.GameObject;
+import entities.Shot;
 import entities.ships.Enemy;
 import entities.ships.Player;
 import gameEngine.panels.DisplayPanel;
@@ -71,7 +72,7 @@ public class Controller{
         int pause = 0;
 
         // Initialise le timer de jeu
-        new Timer(10, evt -> update()).start();
+        new Timer(5, evt -> update()).start();
         new Timer(1000, evt -> spawnGameObject()).start();
 
         movePlayer();
@@ -81,17 +82,12 @@ public class Controller{
      * Fonction apelée à chaque frame
      */
     private void update() {
+
         // Pour chaque asteroide, le supprime s'il est hors de l'interface
         decorElements.removeIf(decor -> decor.isOutOf(frame.getHeight()));
 
-        // Bouge les asteroides
-        for(GameObject decor : decorElements){
-            decor.move();
-        }
-
-        for(GameObject shot : shots){
-            shot.move();
-        }
+        // Pour chaque tir, le supprime s'il est hors de l'interface
+        shots.removeIf(shot -> shot.isOutOf(frame.getHeight()));
 
         // Freine le joueur
         if (!playerMoving)
@@ -101,6 +97,18 @@ public class Controller{
         if (player.getPosition().getX() + player.getMovementVector().getX() >= 0
                 && player.getPosition().getX() + player.getSize().getWidth() + player.getMovementVector().getX() <= displayPanel.getWidth())
             player.move();
+
+        // Bouge les lasers
+        for(GameObject shot : shots){
+            shot.move();
+        }
+
+        // Bouge les asteroides
+        for(GameObject decor : decorElements){
+            decor.move();
+        }
+
+
 
         // Applique les mouvements
         applyKeys();
@@ -150,50 +158,7 @@ public class Controller{
                 playerMoving = true;
                 int key = Character.toUpperCase(e.getKeyChar());
                 System.out.println("KEY PRESSED : " + key);
-                switch (key) {
-                    case KeyEvent.VK_S:
-                    case KeyEvent.VK_DOWN:
-                        //move down
-                        activeKeys.add(key);
-                        //player.setMovementVector(new Point(0,10));
-                        break;
-
-                    case KeyEvent.VK_W:
-                    case KeyEvent.VK_UP:
-                        //move up
-                        activeKeys.add(key);
-                        //player.setMovementVector(new Point(0,-10));
-                        break;
-
-                    // shoot
-                    case KeyEvent.VK_SPACE:
-                        activeKeys.add(key);
-                        //shots.add(player.fire());
-                        break;
-
-                    // move left
-                    case KeyEvent.VK_A:
-                    case KeyEvent.VK_LEFT:
-                        activeKeys.add(key);
-                        //player.setMovementVector(new Point(-8,0));
-                        break;
-
-                    // move right
-                    case KeyEvent.VK_D:
-                    case KeyEvent.VK_RIGHT:
-                        activeKeys.add(key);
-                        //player.setMovementVector(new Point(8,0));
-                        break;
-
-                    // Exit program
-                    case KeyEvent.VK_ESCAPE:
-                        activeKeys.add(key);
-                        //System.exit(0);
-                        break;
-
-                    default:
-                        System.out.println("Wrong key");
-                }
+                activeKeys.add(key);
             }
 
             @Override
@@ -211,7 +176,8 @@ public class Controller{
         for (int key : activeKeys) {
             switch (key) {
                 case KeyEvent.VK_SPACE:
-                    shots.add(player.fire());
+                    Shot shot = player.fire();
+                    if (shot != null) shots.add(shot);
                     break;
 
                 case KeyEvent.VK_S:
