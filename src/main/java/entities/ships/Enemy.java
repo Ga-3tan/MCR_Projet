@@ -4,20 +4,23 @@ import entities.GameObject;
 import entities.Shot;
 
 import java.awt.*;
+import java.util.Date;
 
 public class Enemy extends Ship{
 
-    private static final String BLACK_ENEMY_PATH ="images\\PNG\\Enemies\\enemyBlack3.png";
-    private static final String BLUE_ENEMY_PATH="images\\PNG\\Enemies\\enemyBlue5.png";
-    private static final String GREEN_ENEMY_PATH="images\\PNG\\Enemies\\enemyGreen2.png";
-    private static final String ORANGE_ENEMY_PATH="images\\PNG\\Enemies\\enemyRed4.png";
+    public static final String BLACK_ENEMY_PATH ="images\\PNG\\Enemies\\enemyBlack3.png";
+    public static final String BLUE_ENEMY_PATH="images\\PNG\\Enemies\\enemyBlue5.png";
+    public static final String GREEN_ENEMY_PATH="images\\PNG\\Enemies\\enemyGreen2.png";
+    public static final String ORANGE_ENEMY_PATH="images\\PNG\\Enemies\\enemyRed4.png";
+    static final int SHOOT_DELAY = 1000;
+    long lastShotTime = 0;
 
-    public Enemy(String spritePath, Point position, Point movementVector, Dimension size, int hp) {
-        super(spritePath, position, movementVector, size, hp);
+    public Enemy(String path, Point position, Point movementVector, Dimension size, int hp) {
+        super(path, position, movementVector, size, hp);
     }
 
     public Enemy(Enemy enemy) {
-        this(enemy.getSpritePath(), enemy.getPosition(), enemy.getMovementVector(), enemy.getSize(), enemy.getHp());
+        super(enemy.getSpritePath(), enemy.getPosition(), enemy.getMovementVector(), enemy.getSize(), enemy.getHp());
     }
 
     @Override
@@ -27,9 +30,17 @@ public class Enemy extends Ship{
 
     @Override
     public Shot fire() {
-        Shot shot = (Shot) redLaser.clone();
-        greenLaser.setMovementVector(new Point(0,6)); // 0, 6 => va vers le haut
-        greenLaser.setPosition(this.getPosition());
-        return shot;
+        if (new Date().getTime() - lastShotTime > SHOOT_DELAY) {
+            lastShotTime = new Date().getTime();
+
+            Shot shot = (Shot) redLaser.clone();
+            shot.setFriendly(this);
+            shot.setMovementVector(new Point(0, 5)); // 0, 7 => va vers le bas
+            shot.setPosition(new Point(this.getPosition().x + (int) (this.getSize().getWidth() / 2), this.getPosition().y));
+
+            return shot;
+        } else {
+            return null;
+        }
     }
 }

@@ -14,8 +14,10 @@ public class RandomGenerator {
      * @return entier aléatoire entre les 2 bornes
      */
     public static int randomInt(int min, int max) {
-        if(max < min || (min == 0 && max == 0))
+        if(max < min)
             throw new IllegalArgumentException("Illegal interval");
+        else if(min == 0 && max == 0)
+            return 0;
         Random r = new Random();
         return r.nextInt((max - min) + 1) + min;
     }
