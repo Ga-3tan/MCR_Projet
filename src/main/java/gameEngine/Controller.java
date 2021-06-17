@@ -51,7 +51,10 @@ public class Controller {
     private final LinkedList<Ship> enemiesPrototypes = new LinkedList<>();
     private final LinkedList<Asteroid> asteroidsPrototypes = new LinkedList<>();
 
-
+    /**
+     *
+     * @return
+     */
     public static Controller getInstance() {
         if (instance == null)
             instance = new Controller();
@@ -59,6 +62,9 @@ public class Controller {
         return instance;
     }
 
+    /**
+     *
+     */
     private Controller() {
         this.player = new Player(new Point(231, 920), new Point(0, 0), new Dimension(50, 50), 10);
 
@@ -84,11 +90,17 @@ public class Controller {
         score = 0;
     }
 
+    /**
+     *
+     */
     public void run() {
         for (Timer t : timers)
             t.start();
     }
 
+    /**
+     *
+     */
     public void stopTimers() {
         for (Timer t : timers)
             t.stop();
@@ -98,15 +110,6 @@ public class Controller {
      * Fonction apelée à chaque frame
      */
     private void update() {
-
-        // Pour chaque enemies, le supprime s'il est hors de l'interface
-        enemies.removeIf(enemy -> enemy.isOutOf(displayPanel));
-
-        // Pour chaque asteroide, le supprime s'il est hors de l'interface
-        decorElements.removeIf(decor -> decor.isOutOf(displayPanel));
-
-        // Pour chaque tir, le supprime s'il est hors de l'interface
-        shots.removeIf(shot -> shot.isOutOf(displayPanel));
 
         // Freine le joueur
         if (!playerMoving) // TODO sûr de la condition ?
@@ -133,57 +136,124 @@ public class Controller {
         // Applique les mouvements
         applyKeys();
 
-        // Player collision ennemy shot
-        // Enemy  collision player shot
-        for (int i = 0; i < shots.size(); ) {
-            Shot shot = (Shot) shots.get(i);
-            boolean shotDestroyed = false;
-            if (shot.getFriendly()) {// if the shot come from player
-                for (GameObject enemy : enemies) {
-                    if (enemy.getHitbox().intersects(shot.getHitbox())) {
-                        ((Enemy) enemy).reduceHP(shot.getDamage());
-                        shots.remove(shot);
-                        shotDestroyed = true;
-                    }
-                }
-            } else if (player.getHitbox().intersects(shot.getHitbox())) {
-                player.reduceHP(shot.getDamage());
-                shots.remove(shot);
-                shotDestroyed = true;
-            }
-            if (!shotDestroyed) i++;
-        }
+        //Shots collision
+        shotsCollisions();
 
-        //Player collision with asteroid
-        for (GameObject asteroid : decorElements) {
-            if (player.getHitbox().intersects(asteroid.getHitbox()))
-                player.setHp(0);
-        }
-
-        //Player collision with enemy
-        for (GameObject enemy : enemies) {
-            if (player.getHitbox().intersects(enemy.getHitbox()))
-                player.reduceHP(5);
-        }
-
-        // Checks if enemy is dead and removes it
-        enemies.removeIf(enemy -> {
-            boolean out = ((Ship) enemy).getHp() <= 0;
-            if(out) ++score;
-            return out; }
-        );
+        //Player collisions
+        playerCollisions();
 
         if (player.getHp() <= 0) {
-            player.setSprite(Toolkit.getDefaultToolkit().getImage("images/PNG/Damage/playerShip3_damage3.png").getScaledInstance(50, 50, Image.SCALE_DEFAULT));
+            player.die();
             stopTimers();
             System.out.println("GAME OVER"); // GAME OVER
         }
+
+        // Pour chaque enemies, le supprime s'il est mort
+        enemies.removeIf(enemy -> {
+            Enemy e = (Enemy) enemy;
+            boolean out = e.getHp() <= 0;
+            if (out) score += e.getScoreValue();
+            return out;
+        });
+
+        // Pour chaque enemies, le supprime s'il est hors de l'interface
+        enemies.removeIf(enemy -> enemy.isOutOf(displayPanel));
+
+        // Pour chaque asteroide, le supprime s'il est hors de l'interface
+        decorElements.removeIf(decor -> decor.isOutOf(displayPanel));
+
+        // Pour chaque tir, le supprime s'il est hors de l'interface
+        shots.removeIf(shot -> shot.isOutOf(displayPanel));
 
         displayPanel.repaint();
         infoPanel.repaint();
     }
 
+    /* COLLISIONS */
 
+    /**
+     *
+     */
+    private void playerCollisions() {
+        playerCollisionGameObject(decorElements);
+        playerCollisionGameObject(enemies);
+    }
+
+    /**
+     *
+     * @param gameObjectList
+     */
+    private void playerCollisionGameObject(List<GameObject> gameObjectList) {
+        for (GameObject gameObject : gameObjectList) {
+            if (player.getHitbox().intersects(gameObject.getHitbox())) {
+                player.setHp(0); // kill player
+            }
+        }
+    }
+
+    /**
+     *
+     */
+    private void shotsCollisions() {
+        for (int i = 0; i < shots.size(); ) {
+            Shot shot = (Shot) shots.get(i);
+            boolean shotDestroyed = shotAsteroidCollision(shot) || shotEnemyCollision(shot) || shotPlayerCollision(shot);
+            if (!shotDestroyed) i++;
+        }
+    }
+
+    /**
+     *
+     * @param shot
+     * @return
+     */
+    private boolean shotAsteroidCollision(Shot shot) {
+        for (GameObject asteroid : decorElements) {
+            if (asteroid.getHitbox().intersects(shot.getHitbox())) {
+                shots.remove(shot);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     *
+     * @param shot
+     * @return
+     */
+    private boolean shotEnemyCollision(Shot shot) {
+        if (shot.getFriendly()) {
+            for (GameObject enemy : enemies) {
+                if (enemy.getHitbox().intersects(shot.getHitbox())) {
+                    ((Enemy) enemy).reduceHP(shot.getDamage());
+                    shots.remove(shot);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     *
+     * @param shot
+     * @return
+     */
+    private boolean shotPlayerCollision(Shot shot) {
+        if (!shot.getFriendly() && player.getHitbox().intersects(shot.getHitbox())) {
+            player.reduceHP(shot.getDamage());
+            shots.remove(shot);
+            return true;
+        }
+        return false;
+    }
+
+    /* PROTOTYPE INITIALIZATIONS */
+
+    /**
+     *
+     */
     private void initializePrototypes() {
 
         // Initialiser tous les prototypes
@@ -194,10 +264,10 @@ public class Controller {
         asteroidsPrototypes.add(new Asteroid(new Dimension(25, 25), new Point(0, 4)));
 
         // ENEMIES
-        enemiesPrototypes.add(new Enemy(GREEN_ENEMY_PATH, new Point(0, 0), new Point(0, 3), new Dimension(50, 50), 2, 1500, 5));
-        enemiesPrototypes.add(new Enemy(BLUE_ENEMY_PATH, new Point(0, 0), new Point(0, 2), new Dimension(50, 50), 4, 1500, 7));
-        enemiesPrototypes.add(new Enemy(ORANGE_ENEMY_PATH, new Point(0, 0), new Point(0, 1), new Dimension(50, 50), 5, 2000, 10));
-        enemiesPrototypes.add(new Enemy(BLACK_ENEMY_PATH, new Point(0, 0), new Point(0, 1), new Dimension(50, 50), 5, 2000, 12));
+        enemiesPrototypes.add(new Enemy(GREEN_ENEMY_PATH, new Point(0, 0), new Point(0, 3), new Dimension(50, 50), 2, 1500, 5, 100));
+        enemiesPrototypes.add(new Enemy(BLUE_ENEMY_PATH, new Point(0, 0), new Point(0, 2), new Dimension(50, 50), 4, 1500, 7, 150));
+        enemiesPrototypes.add(new Enemy(ORANGE_ENEMY_PATH, new Point(0, 0), new Point(0, 1), new Dimension(50, 50), 5, 2000, 10, 200));
+        enemiesPrototypes.add(new Enemy(BLACK_ENEMY_PATH, new Point(0, 0), new Point(0, 1), new Dimension(50, 50), 5, 2000, 12, 250));
 
     }
 
@@ -255,6 +325,9 @@ public class Controller {
         });
     }
 
+    /**
+     *
+     */
     private void applyKeys() {
         for (int key : activeKeys) {
             switch (key) {

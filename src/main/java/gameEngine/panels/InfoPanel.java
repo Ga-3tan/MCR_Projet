@@ -12,6 +12,10 @@ public class InfoPanel extends JPanel {
     JLabel score;
     JLabel life;
 
+    /**
+     *
+     * @param controller
+     */
     public InfoPanel(Controller controller) {
         this.controller = controller;
 
@@ -34,6 +38,10 @@ public class InfoPanel extends JPanel {
         add(score);
     }
 
+    /**
+     *
+     * @param g
+     */
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);

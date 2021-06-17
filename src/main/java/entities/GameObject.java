@@ -20,7 +20,13 @@ abstract public class GameObject {
 
     Random rand = new Random();
 
-
+    /**
+     *
+     * @param spritePath
+     * @param position
+     * @param movementVector
+     * @param size
+     */
     public GameObject(String spritePath, Point position, Point movementVector, Dimension size) {
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Image image = toolkit.getImage(spritePath).getScaledInstance(size.width, size.height, Image.SCALE_DEFAULT);
@@ -32,6 +38,9 @@ abstract public class GameObject {
         this.hitbox = new Rectangle(position.x, position.y, (int) size.getWidth(), (int) size.getHeight());
     }
 
+    /**
+     *
+     */
     public void move() {
         this.setPosition(new Point(
                 (int) (this.getPosition().getX() + this.getMovementVector().getX()),
@@ -40,6 +49,10 @@ abstract public class GameObject {
         this.getHitbox().setLocation(this.getPosition());
     }
 
+    /**
+     *
+     * @return
+     */
     public abstract GameObject clone();
 
     /**
@@ -69,14 +82,25 @@ abstract public class GameObject {
         this.setMovementVector(new Point(0, dy));
     }
 
+    /**
+     *
+     * @return
+     */
     public int getDeltaX() {
         return (int) getMovementVector().getX();
     }
 
+    /**
+     *
+     * @return
+     */
     public int getDeltaY() {
         return (int) getMovementVector().getY();
     }
 
+    /**
+     *
+     */
     public void slowDown() {
         if (this.getDeltaX() > 0) {
             this.setMovementVector(new Point(this.getDeltaX() - 1, 0));

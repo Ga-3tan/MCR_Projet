@@ -13,6 +13,10 @@ public class DisplayPanel extends JPanel {
     private final Controller controller;
     private final int[] backgroundYPositions = new int[2];
 
+    /**
+     *
+     * @param controller
+     */
     public DisplayPanel(Controller controller) {
         this.controller = controller;
         setBackground(Color.BLACK);
@@ -22,6 +26,10 @@ public class DisplayPanel extends JPanel {
         backgroundYPositions[1] = -DIMENTION.height;
     }
 
+    /**
+     *
+     * @param g
+     */
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -39,6 +47,9 @@ public class DisplayPanel extends JPanel {
         }
     }
 
+    /**
+     *
+     */
     private void updateBackgroundPositions() {
         // Checks for background position reset
         if (backgroundYPositions[0] > DIMENTION.height)
