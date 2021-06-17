@@ -1,5 +1,6 @@
 package entities;
 
+import gameEngine.panels.DisplayPanel;
 import lombok.Getter;
 import lombok.Setter;
 

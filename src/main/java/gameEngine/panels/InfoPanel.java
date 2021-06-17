@@ -9,6 +9,8 @@ public class InfoPanel extends JPanel {
 
     private static final Dimension DIMENSION = new Dimension(576, 50);
     private final Controller controller;
+    JLabel score;
+    JLabel life;
 
     public InfoPanel(Controller controller) {
         this.controller = controller;
@@ -27,7 +29,7 @@ public class InfoPanel extends JPanel {
         score.setForeground(Color.WHITE);
 
         // Ajoute les textes au panel
-        score.add(new JLabel(String.valueOf(controller.score())));
+        //score.setText(new JLabel( String.valueOf(controller.getScore())));
         add(life);
         add(score);
     }
@@ -35,5 +37,8 @@ public class InfoPanel extends JPanel {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+        life.setText("LIVES : " + controller.getPlayer().getHp());
+        score.setText("SCORE : " + controller.getScore());
+
     }
 }

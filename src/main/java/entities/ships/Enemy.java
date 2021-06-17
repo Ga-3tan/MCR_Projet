@@ -34,8 +34,8 @@ public class Enemy extends Ship{
             lastShotTime = new Date().getTime();
 
             Shot shot = (Shot) redLaser.clone();
-            shot.setFriendly(this);
-            shot.setMovementVector(new Point(0, 5)); // 0, 7 => va vers le bas
+            shot.setFriendly(false);
+            shot.setMovementVector(new Point(0, getShoot_speed())); // 0, 7 => va vers le bas
             shot.setPosition(new Point(this.getPosition().x + (int) (this.getSize().getWidth() / 2), (int) (this.getPosition().y + this.getSize().getHeight())));
 
             return shot;

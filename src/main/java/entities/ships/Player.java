@@ -2,6 +2,7 @@ package entities.ships;
 
 import entities.GameObject;
 import entities.Shot;
+import gameEngine.panels.DisplayPanel;
 
 import java.awt.*;
 import java.util.Date;
@@ -32,7 +33,7 @@ public class Player extends Ship {
             lastShotTime = new Date().getTime();
 
             Shot shot = (Shot) greenLaser.clone();
-            shot.setFriendly(this);
+            shot.setFriendly(true);
             shot.setMovementVector(new Point(0, -12)); // 0, -12 => va vers le haut
             shot.setPosition(new Point(this.getPosition().x + (int) (this.getSize().getWidth() / 2), this.getPosition().y));
 

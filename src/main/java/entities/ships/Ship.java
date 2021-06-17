@@ -26,5 +26,17 @@ abstract public class Ship extends GameObject {
         this.shoot_delay = shoot_delay;
     }
 
+    public void reduceHP(int points){
+        if (this.getHp() - points <= 0) {
+            hp = 0;
+        } else {
+            hp -= points;
+        }
+    }
+
+    public void setHp(int hp) {
+        this.hp = hp;
+    }
+
     public abstract Shot fire();
 }

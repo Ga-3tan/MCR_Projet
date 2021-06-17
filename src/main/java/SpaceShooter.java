@@ -9,3 +9,12 @@ public class SpaceShooter {
         Controller.getInstance();
     }
 }
+//TODO
+// Button start
+// Display Game Over Label
+// Regler vitesse
+// Refactoring
+// ಠ_ಠ   ⊂◉‿◉つ (╯✧▽✧)╯
+
+// A la fin
+// Doxygen
