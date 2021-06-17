@@ -243,18 +243,13 @@ public class Controller {
 
             @Override
             public void keyPressed(KeyEvent e) {
-                playerMoving = true;
-                int key = Character.toUpperCase(e.getKeyChar());
-                System.out.println("KEY PRESSED : " + key);
-                activeKeys.add(key);
+                activeKeys.add(e.getKeyCode());
             }
 
             @Override
             public void keyReleased(KeyEvent e) {
-                int key = Character.toUpperCase(e.getKeyChar());
-                System.out.println("KEY UNPRESSED : " + key);
                 System.out.println(activeKeys);
-                activeKeys.remove(key);
+                activeKeys.remove(e.getKeyCode());
                 playerMoving = false;
             }
         });

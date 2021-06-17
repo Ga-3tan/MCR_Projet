@@ -23,8 +23,8 @@ public class InfoPanel extends JPanel {
         setLayout(new GridLayout(1, 2));
 
         // Configure les zones de texte
-        JLabel life = new JLabel("LIVES : 10", JLabel.CENTER);
-        JLabel score = new JLabel("SCORE : 0", JLabel.CENTER);
+        life = new JLabel("LIVES : 10" , JLabel.CENTER);
+        score = new JLabel("SCORE : " + controller.getScore(), JLabel.CENTER);
         life.setForeground(Color.WHITE);
         score.setForeground(Color.WHITE);
 
