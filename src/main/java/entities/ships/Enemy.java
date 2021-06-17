@@ -15,12 +15,12 @@ public class Enemy extends Ship{
 
     private long lastShotTime = 0;
 
-    public Enemy(String path, Point position, Point movementVector, Dimension size, int hp, int shoot_delay) {
-        super(path, position, movementVector, size, hp, shoot_delay);
+    public Enemy(String path, Point position, Point movementVector, Dimension size, int hp, int shoot_delay, int shoot_speed) {
+        super(path, position, movementVector, size, hp, shoot_delay, shoot_speed);
     }
 
     public Enemy(Enemy enemy) {
-        super(enemy.getSpritePath(), enemy.getPosition(), enemy.getMovementVector(), enemy.getSize(), enemy.getHp(), enemy.getShoot_delay());
+        super(enemy.getSpritePath(), enemy.getPosition(), enemy.getMovementVector(), enemy.getSize(), enemy.getHp(), enemy.getShoot_delay(), enemy.getShoot_speed());
     }
 
     @Override

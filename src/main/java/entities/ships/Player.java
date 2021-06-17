@@ -11,15 +11,16 @@ import java.util.Date;
 public class Player extends Ship {
     private static final String PLAYER_PATH = "images/PNG/playerShip2_green.png";
     static final int SHOOT_DELAY = 300;
+    static final int SHOOT_SPEED = -12;
 
     long lastShotTime = 0;
 
     public Player(Point position, Point movementVector, Dimension size, int hp) {
-        super(PLAYER_PATH, position, movementVector, size, hp, SHOOT_DELAY);
+        super(PLAYER_PATH, position, movementVector, size, hp, SHOOT_DELAY, SHOOT_SPEED);
     }
 
     public Player(Player copy) {
-        super(PLAYER_PATH, copy.getPosition(), copy.getMovementVector(), copy.getSize(), copy.getHp(), copy.getShoot_delay());
+        super(PLAYER_PATH, copy.getPosition(), copy.getMovementVector(), copy.getSize(), copy.getHp(), copy.getShoot_delay(), copy.getShoot_speed());
     }
 
     @Override

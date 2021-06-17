@@ -125,12 +125,10 @@ public class Controller {
         // Bouge les lasers
         for (GameObject shot : shots)
             shot.move();
-        }
 
         // Bouge les asteroides
-        for(GameObject decor : decorElements){
+        for (GameObject decor : decorElements)
             decor.move();
-        }
 
         // Applique les mouvements
         applyKeys();
@@ -196,10 +194,10 @@ public class Controller {
         asteroidsPrototypes.add(new Asteroid(new Dimension(25, 25), new Point(0, 4)));
 
         // ENEMIES
-        enemiesPrototypes.add(new Enemy(GREEN_ENEMY_PATH, new Point (0,0), new Point(0, 1),new Dimension(50,50), 100, 1000 ));
-        enemiesPrototypes.add(new Enemy(BLUE_ENEMY_PATH,  new Point (0,0), new Point(0, 2),new Dimension(50,50), 250, 1000 ));
-        enemiesPrototypes.add(new Enemy(ORANGE_ENEMY_PATH,new Point (0,0), new Point(0, 3),new Dimension(50,50), 500, 1000 ));
-        enemiesPrototypes.add(new Enemy(BLACK_ENEMY_PATH, new Point (0,0), new Point(0, 1),new Dimension(50,50), 1000, 1000 ));
+        enemiesPrototypes.add(new Enemy(GREEN_ENEMY_PATH, new Point(0, 0), new Point(0, 3), new Dimension(50, 50), 2, 1500, 5));
+        enemiesPrototypes.add(new Enemy(BLUE_ENEMY_PATH, new Point(0, 0), new Point(0, 2), new Dimension(50, 50), 4, 1500, 7));
+        enemiesPrototypes.add(new Enemy(ORANGE_ENEMY_PATH, new Point(0, 0), new Point(0, 1), new Dimension(50, 50), 5, 2000, 10));
+        enemiesPrototypes.add(new Enemy(BLACK_ENEMY_PATH, new Point(0, 0), new Point(0, 1), new Dimension(50, 50), 5, 2000, 12));
 
     }
 
@@ -290,13 +288,15 @@ public class Controller {
                 // Move left
                 case KeyEvent.VK_A:
                 case KeyEvent.VK_LEFT:
-                    player.setMovementVector(new Point(-8,0));
+                    player.setMovementVector(new Point(-8, 0));
+                    playerMoving = true;
                     break;
 
                 // Move right
                 case KeyEvent.VK_D:
                 case KeyEvent.VK_RIGHT:
-                    player.setMovementVector(new Point(8,0));
+                    player.setMovementVector(new Point(8, 0));
+                    playerMoving = true;
                     break;
 
                 // Exit program
