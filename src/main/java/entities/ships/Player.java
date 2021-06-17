@@ -14,11 +14,11 @@ public class Player extends Ship {
     long lastShotTime = 0;
 
     public Player(Point position, Point movementVector, Dimension size, int hp) {
-        super(PLAYER_PATH, position, movementVector, size, hp);
+        super(PLAYER_PATH, position, movementVector, size, hp, SHOOT_DELAY);
     }
 
     public Player(Player copy) {
-        super(PLAYER_PATH, copy.getPosition(), copy.getMovementVector(), copy.getSize(), copy.getHp());
+        super(PLAYER_PATH, copy.getPosition(), copy.getMovementVector(), copy.getSize(), copy.getHp(), copy.getShoot_delay());
     }
 
     @Override
@@ -28,7 +28,7 @@ public class Player extends Ship {
 
     @Override
     public Shot fire() {
-        if (new Date().getTime() - lastShotTime > SHOOT_DELAY) {
+        if (new Date().getTime() - lastShotTime > this.getShoot_delay()) {
             lastShotTime = new Date().getTime();
 
             Shot shot = (Shot) greenLaser.clone();

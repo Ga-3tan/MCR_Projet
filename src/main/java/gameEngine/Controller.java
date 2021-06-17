@@ -144,10 +144,10 @@ public class Controller{
         asteroidsPrototypes.add(new Asteroid(new Dimension(25,25), new Point(0, 4)));
 
         // ENEMIES
-        enemiesPrototypes.add(new Enemy(GREEN_ENEMY_PATH, new Point (0,0), new Point(0, 1),new Dimension(50,50), 100 ));
-        enemiesPrototypes.add(new Enemy(BLUE_ENEMY_PATH,  new Point (0,0), new Point(0, 1),new Dimension(50,50), 250 ));
-        enemiesPrototypes.add(new Enemy(BLACK_ENEMY_PATH, new Point (0,0), new Point(0, 1),new Dimension(50,50), 500 ));
-        enemiesPrototypes.add(new Enemy(ORANGE_ENEMY_PATH,new Point (0,0), new Point(0, 1),new Dimension(50,50), 1000 ));
+        enemiesPrototypes.add(new Enemy(GREEN_ENEMY_PATH, new Point (0,0), new Point(0, 1),new Dimension(50,50), 100, 1000 ));
+        enemiesPrototypes.add(new Enemy(BLUE_ENEMY_PATH,  new Point (0,0), new Point(0, 2),new Dimension(50,50), 250, 1000 ));
+        enemiesPrototypes.add(new Enemy(ORANGE_ENEMY_PATH,new Point (0,0), new Point(0, 3),new Dimension(50,50), 500, 1000 ));
+        enemiesPrototypes.add(new Enemy(BLACK_ENEMY_PATH, new Point (0,0), new Point(0, 1),new Dimension(50,50), 1000, 1000 ));
 
     }
 
