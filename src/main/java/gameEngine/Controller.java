@@ -144,8 +144,9 @@ public class Controller {
 
         if (player.getHp() <= 0) {
             player.die();
+            Image gameOver = Toolkit.getDefaultToolkit().getImage("images/game-over.png").getScaledInstance(400, 400,Image.SCALE_FAST);
+            displayPanel.add(new JLabel(new ImageIcon(gameOver), JLabel.CENTER));
             stopTimers();
-            System.out.println("GAME OVER"); // GAME OVER
         }
 
         // Pour chaque enemies, le supprime s'il est mort
