@@ -23,7 +23,7 @@ abstract public class GameObject {
 
     public GameObject(String spritePath, Point position, Point movementVector, Dimension size) {
         Toolkit toolkit = Toolkit.getDefaultToolkit();
-        Image image = toolkit.getImage(spritePath).getScaledInstance(size.width, size.height, Image.SCALE_DEFAULT);;
+        Image image = toolkit.getImage(spritePath).getScaledInstance(size.width, size.height, Image.SCALE_DEFAULT);
         this.spritePath = spritePath;
         this.sprite = image;
         this.position = position;

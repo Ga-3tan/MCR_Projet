@@ -36,6 +36,7 @@ public class Player extends Ship {
             shot.setFriendly(true);
             shot.setMovementVector(new Point(0, -12)); // 0, -12 => va vers le haut
             shot.setPosition(new Point(this.getPosition().x + (int) (this.getSize().getWidth() / 2), this.getPosition().y));
+            shot.setDamage(1);
 
             return shot;
         } else {

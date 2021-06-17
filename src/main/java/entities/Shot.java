@@ -9,10 +9,10 @@ import java.awt.*;
 @Getter
 @Setter
 public class Shot extends GameObject {
-    private Ship friendly = null;
-    private int damage = 0;
+    private Boolean friendly;
+    private int damage;
 
-    public Shot(String spritePath, Point position, Point movementVector, Dimension size, Ship friendly, int damage) {
+    public Shot(String spritePath, Point position, Point movementVector, Dimension size, Boolean friendly, int damage) {
         super(spritePath, position, movementVector, size);
         this.friendly = friendly;
         this.damage = damage;

@@ -60,7 +60,7 @@ public class Controller {
     }
 
     private Controller() {
-        this.player = new Player(new Point(231, 920), new Point(0,0), new Dimension(50,50), 500);
+        this.player = new Player(new Point(231, 920), new Point(0, 0), new Dimension(50, 50), 10);
 
         // Initialise les frames et panels
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
