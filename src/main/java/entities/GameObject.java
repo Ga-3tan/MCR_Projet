@@ -46,9 +46,9 @@ abstract public class GameObject {
      * Vérifie si la position du gameObject est hors de l'interface verticalement
      * @return true s'il est hors de l'interface, false sinon
      * */
-    public boolean isOutOf(int yBoundary){
-        return this.getPosition().y + this.getSize().height > yBoundary
-                ||this.getPosition().y + this.getSize().height < 0;
+    public boolean isOutOf(DisplayPanel displayPanel){
+        return this.getPosition().getY() > displayPanel.getHeight()/*
+                || this.getPosition().getY() < 0*/;
     }
 
     /**
@@ -69,4 +69,25 @@ abstract public class GameObject {
         this.setMovementVector(new Point(0, dy));
     }
 
+    public int getDeltaX() {
+        return (int) getMovementVector().getX();
+    }
+
+    public int getDeltaY() {
+        return (int) getMovementVector().getY();
+    }
+
+    public void slowDown() {
+        if (this.getDeltaX() > 0) {
+            this.setMovementVector(new Point(this.getDeltaX() - 1, 0));
+        } else if (this.getDeltaX() < 0) {
+            this.setMovementVector(new Point(this.getDeltaX() + 1, 0));
+        }
+
+        if (this.getDeltaY() > 0) {
+            this.setMovementVector(new Point(0, this.getDeltaY() - 1));
+        } else if (this.getDeltaY() < 0) {
+            this.setMovementVector(new Point(0, this.getDeltaY() + 1));
+        }
+    }
 }

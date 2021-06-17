@@ -42,4 +42,13 @@ public class Player extends Ship {
             return null;
         }
     }
+
+    @Override
+    public boolean isOutOf(DisplayPanel displayPanel) {
+        return !(this.getPosition().getX() + this.getDeltaX() >= 0
+                && this.getPosition().getX() + this.getSize().getWidth() + this.getDeltaX() <= displayPanel.getWidth()
+                && this.getPosition().getY() + this.getDeltaY() >= 0
+                && this.getPosition().getY() + this.getSize().getHeight() + this.getDeltaY() <= displayPanel.getHeight());
+    }
+
 }

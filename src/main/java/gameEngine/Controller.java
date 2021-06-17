@@ -52,6 +52,13 @@ public class Controller {
     private final LinkedList<Asteroid> asteroidsPrototypes = new LinkedList<>();
 
 
+    public static Controller getInstance() {
+        if (instance == null)
+            instance = new Controller();
+
+        return instance;
+    }
+
     private Controller() {
         this.player = new Player(new Point(231, 920), new Point(0,0), new Dimension(50,50), 500);
 
@@ -77,6 +84,16 @@ public class Controller {
         score = 0;
     }
 
+    public void run() {
+        for (Timer t : timers)
+            t.start();
+    }
+
+    public void stopTimers() {
+        for (Timer t : timers)
+            t.stop();
+    }
+
     /**
      * Fonction apelée à chaque frame
      */
@@ -97,15 +114,6 @@ public class Controller {
 
         // Bouge le joueur
         if (!player.isOutOf(displayPanel))
-            player.move();
-
-        // Freine le joueur
-        if (!playerMoving)
-            breakPlayer();
-
-        // Bouge le joueur
-        if (player.getPosition().getX() + player.getMovementVector().getX() >= 0
-                && player.getPosition().getX() + player.getSize().getWidth() + player.getMovementVector().getX() <= displayPanel.getWidth())
             player.move();
 
         // Bouge les enemies + fire()
@@ -177,18 +185,6 @@ public class Controller {
         infoPanel.repaint();
     }
 
-//    private void spawnGameObject() {
-//        // Spawn les clones d'asteroides (aléatoirement)
-//        spawnAsteroids();
-//        spawnEnemies();
-//    }
-
-    public static Controller getInstance() {
-        if (instance == null)
-            instance = new Controller();
-
-        return instance;
-    }
 
     private void initializePrototypes() {
 
@@ -308,20 +304,6 @@ public class Controller {
                     System.exit(0);
                     break;
             }
-        }
-    }
-
-    private void breakPlayer() {
-        if (player.getMovementVector().getX() > 0) {
-            player.setMovementVector(new Point((int) player.getMovementVector().getX() - 1, 0));
-        } else if (player.getMovementVector().getX() < 0) {
-            player.setMovementVector(new Point((int) player.getMovementVector().getX() + 1, 0));
-        }
-
-        if (player.getMovementVector().getY() > 0) {
-            player.setMovementVector(new Point(0, (int) player.getMovementVector().getY() - 1));
-        } else if (player.getMovementVector().getY() < 0) {
-            player.setMovementVector(new Point(0, (int) player.getMovementVector().getY() + 1));
         }
     }
 

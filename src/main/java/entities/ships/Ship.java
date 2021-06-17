@@ -39,4 +39,5 @@ abstract public class Ship extends GameObject {
     }
 
     public abstract Shot fire();
+
 }

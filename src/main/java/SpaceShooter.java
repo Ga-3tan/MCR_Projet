@@ -6,7 +6,7 @@ import lombok.Setter;
 @Setter
 public class SpaceShooter {
     public static void main(String[] args) {
-        Controller.getInstance();
+        Controller.getInstance().run();
     }
 }
 //TODO
