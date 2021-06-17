@@ -20,6 +20,7 @@ public class DisplayPanel extends JPanel {
     public DisplayPanel(Controller controller) {
         this.controller = controller;
         setBackground(Color.BLACK);
+        setLayout(new BorderLayout());
 
         // Initialisation des positions du background
         backgroundYPositions[0] = 0;

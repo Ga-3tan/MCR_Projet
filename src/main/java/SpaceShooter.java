@@ -11,7 +11,6 @@ public class SpaceShooter {
 }
 //TODO
 // Button start
-// Display Game Over Label
 // Regler vitesse
 // Refactoring
 // ಠ_ಠ   ⊂◉‿◉つ (╯✧▽✧)╯
