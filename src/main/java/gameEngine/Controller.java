@@ -20,6 +20,9 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.Timer;
 
+import static entities.ships.Enemy.*;
+import static utils.RandomGenerator.randomInt;
+
 
 public class Controller{
     private static final Dimension DIMENSION = new Dimension(512, 1074);
@@ -34,28 +37,20 @@ public class Controller{
 
     // Elements du jeu
     private final Ship player;
-    /*private final Ship blackEnemy;
-    private final Ship blueEnemy;
-    private final Ship greenEnemy;
-    private final Ship orangeEnemy;*/
     private boolean playerMoving;
-    private final LinkedList<Ship> enemies = new LinkedList<>();
+    private final LinkedList<GameObject> enemies = new LinkedList<>();
     private final LinkedList<GameObject> decorElements = new LinkedList<>();
     private final LinkedList<GameObject> shots = new LinkedList<>();
 
 
     // Prototypes
     private final LinkedList<Ship> shipPrototypes = new LinkedList<>();
+    private final LinkedList<Ship> enemiesPrototypes = new LinkedList<>();
     private final LinkedList<Asteroid> asteroidsPrototypes = new LinkedList<>();
 
 
     private Controller() {
         this.player = new Player(new Point(231, 920), new Point(0,0), new Dimension(50,50), 500);
-        //this.blackEnemy  = new Enemy()
-        //this.blueEnemy   = new Enemy()
-        //this.greenEnemy  = new Enemy()
-        //this.orangeEnemy = new Enemy()
-
 
         // Initialise les frames et panels
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -68,13 +63,15 @@ public class Controller{
         frame.pack();
         initializePrototypes();
 
+
         int speed = 0;
         int pause = 0;
 
         // Initialise le timer de jeu
         new Timer(5, evt -> update()).start();
-        new Timer(1000, evt -> spawnGameObject()).start();
-
+        //new Timer(1000, evt -> spawnGameObject()).start();
+        new Timer(3000, evt -> spawnAsteroids()).start();
+        new Timer(4000, evt -> spawnEnemies()).start();
         movePlayer();
     }
 
@@ -82,6 +79,9 @@ public class Controller{
      * Fonction apelée à chaque frame
      */
     private void update() {
+
+        // Pour chaque enemies, le supprime s'il est hors de l'interface
+        enemies.removeIf(enemy -> enemy.isOutOf(frame.getHeight()));
 
         // Pour chaque asteroide, le supprime s'il est hors de l'interface
         decorElements.removeIf(decor -> decor.isOutOf(frame.getHeight()));
@@ -98,6 +98,13 @@ public class Controller{
                 && player.getPosition().getX() + player.getSize().getWidth() + player.getMovementVector().getX() <= displayPanel.getWidth())
             player.move();
 
+        // Bouge les enemies + fire()
+        for(GameObject enemy : enemies){
+            enemy.move();
+            Shot shot = ( (Ship) enemy).fire();
+            if (shot != null) shots.add(shot);
+        }
+
         // Bouge les lasers
         for(GameObject shot : shots){
             shot.move();
@@ -108,18 +115,17 @@ public class Controller{
             decor.move();
         }
 
-
-
         // Applique les mouvements
         applyKeys();
 
         displayPanel.repaint();
     }
 
-    private void spawnGameObject() {
-        // Spawn les clones d'asteroides (aléatoirement)
-        spawnAsteroids();
-    }
+//    private void spawnGameObject() {
+//        // Spawn les clones d'asteroides (aléatoirement)
+//        spawnAsteroids();
+//        spawnEnemies();
+//    }
 
     public static Controller getInstance() {
         if (instance == null)
@@ -129,18 +135,44 @@ public class Controller{
     }
 
     private void initializePrototypes() {
+
         // Initialiser tous les prototypes
+        // ASTEROIDS
         asteroidsPrototypes.add(new Asteroid(new Dimension(90,90), new Point(0, 2)));
         asteroidsPrototypes.add(new Asteroid(new Dimension(75,75), new Point(0, 4)));
         asteroidsPrototypes.add(new Asteroid(new Dimension(50,50), new Point(0, 2)));
         asteroidsPrototypes.add(new Asteroid(new Dimension(25,25), new Point(0, 4)));
+
+        // ENEMIES
+        enemiesPrototypes.add(new Enemy(GREEN_ENEMY_PATH, new Point (0,0), new Point(0, 1),new Dimension(50,50), 100, 1000 ));
+        enemiesPrototypes.add(new Enemy(BLUE_ENEMY_PATH,  new Point (0,0), new Point(0, 2),new Dimension(50,50), 250, 1000 ));
+        enemiesPrototypes.add(new Enemy(ORANGE_ENEMY_PATH,new Point (0,0), new Point(0, 3),new Dimension(50,50), 500, 1000 ));
+        enemiesPrototypes.add(new Enemy(BLACK_ENEMY_PATH, new Point (0,0), new Point(0, 1),new Dimension(50,50), 1000, 1000 ));
+
+    }
+
+    /**
+     * Créer des clones des prototypes d'enemies de maniere aleatoire
+     * */
+    private void spawnEnemies(){
+
+        // Get a random enemy from enemiesProtype
+        int index = randomInt(0, enemiesPrototypes.size() - 1);
+        GameObject copy = enemiesPrototypes.get(index).clone();
+
+        // Set la coord x de maniere aleatoire
+        int x = randomInt(50, frame.getWidth() - 50);
+        copy.setPosition(new Point(x, 0));
+
+        //Ajoute dans la liste d'enemies
+        enemies.add(copy);
     }
 
     /**
      * Créer des clones des prototypes d'asteroides de maniere aleatoire
      * */
     private void spawnAsteroids(){
-        int index = RandomGenerator.randomInt(0, asteroidsPrototypes.size() - 1);
+        int index = randomInt(0, asteroidsPrototypes.size() - 1);
         GameObject copy = asteroidsPrototypes.get(index).clone();
         copy.randomizePositionOnX(frame.getWidth());
         decorElements.add(copy);
@@ -234,6 +266,7 @@ public class Controller{
     public List<GameObject> getAllGameObjects() {
         List<GameObject> gameObjects = new LinkedList<>();
         gameObjects.add(player);
+        gameObjects.addAll(enemies);
         gameObjects.addAll(decorElements);
         gameObjects.addAll(shots);
         return gameObjects;
