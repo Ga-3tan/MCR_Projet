@@ -9,6 +9,8 @@ import gameEngine.panels.InfoPanel;
 import entities.ships.Ship;
 import entities.Asteroid;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.*;
@@ -17,6 +19,7 @@ import java.util.List;
 import java.util.concurrent.locks.ReentrantLock;
 import javax.swing.*;
 import javax.swing.Timer;
+import javax.swing.border.EmptyBorder;
 
 import static entities.ships.Enemy.*;
 import static utils.RandomGenerator.randomInt;
@@ -38,7 +41,7 @@ public class Controller {
 
 
     // Elements du jeu
-    private final Player player;
+    private Player player;
     private boolean playerMoving;
 
     //List of game objects
@@ -66,13 +69,21 @@ public class Controller {
      *
      */
     private Controller() {
-        this.player = new Player(new Point(231, 920), new Point(0, 0), new Dimension(50, 50), 10);
+        //this.player = new Player(new Point(231, 920), new Point(0, 0), new Dimension(50, 50), 10);
 
         // Initialise les frames et panels
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
         frame.add(infoPanel, BorderLayout.NORTH);
         frame.add(displayPanel, BorderLayout.CENTER);
+        displayPanel.setLayout(new BorderLayout());
+        displayPanel.setBorder(new EmptyBorder(200, 10, 200, 10));
+        JButton start = new JButton();
+        customButton(start, "images/start.png", actionEvent -> {
+            run();
+            start.setVisible(false);
+        });
+        displayPanel.add(start, BorderLayout.CENTER);
         frame.setPreferredSize(DIMENSION);
         frame.setVisible(true);
         frame.setResizable(false);
@@ -81,12 +92,25 @@ public class Controller {
 
 //        int speed = 0;
 //        int pause = 0;
+        movePlayer();
 
-        // Initialise le timer de jeu
+        // Initialise le taimer de jeu
         timers.add(new Timer(17, evt -> update()));
         timers.add(new Timer(10000, evt -> spawnAsteroids()));
         timers.add(new Timer(4000, evt -> spawnEnemies()));
-        movePlayer();
+
+        initGame();
+
+    }
+
+    /**
+     *
+     */
+    private void initGame(){
+        this.player = new Player(new Point(231, 920), new Point(0, 0), new Dimension(50, 50), 10);
+        enemies.clear();
+        decorElements.clear();
+        shots.clear();
         score = 0;
     }
 
@@ -144,8 +168,21 @@ public class Controller {
 
         if (player.getHp() <= 0) {
             player.die();
+            // Game Over label
             Image gameOver = Toolkit.getDefaultToolkit().getImage("images/game-over.png").getScaledInstance(400, 400,Image.SCALE_FAST);
-            displayPanel.add(new JLabel(new ImageIcon(gameOver)), BorderLayout.CENTER);
+            JLabel gameOverLabel = new JLabel(new ImageIcon(gameOver));
+            // Restart bouton
+            JButton restart = new JButton();
+            customButton(restart, "images/restart.png", actionEvent -> {
+                initGame();
+                displayPanel.remove(gameOverLabel);
+                restart.setVisible(false);
+                run();
+            });
+
+            displayPanel.add(gameOverLabel,BorderLayout.CENTER);
+            displayPanel.add(restart, BorderLayout.SOUTH);
+
             stopTimers();
         }
 
@@ -389,5 +426,25 @@ public class Controller {
         gameObjects.addAll(decorElements);
         gameObjects.addAll(shots);
         return gameObjects;
+    }
+
+    /**
+     * Customise et défini l'action à effecture du bouton passé en paramètre
+     *
+     * @param button Un JButton à customiser et définir
+     * @param iconPath Le path jusqu'à l'image de l'icône du bouton
+     * @param actionListener Un objet implémentant l'interface ActionListener qui défini
+     *                       ce que le bouton effectue sur un évènement
+     */
+    private void customButton(JButton button, String iconPath, ActionListener actionListener){
+        Image icon = Toolkit.getDefaultToolkit().getImage(iconPath).getScaledInstance(200, 70,Image.SCALE_FAST);
+        button.setIcon(new ImageIcon(icon));
+        button.setBackground(new Color(58, 46,53));
+        button.setFocusable(false);
+        button.setBorderPainted(false);
+        button.setFocusPainted(false);
+        button.setContentAreaFilled(false);
+        button.setVerticalAlignment(SwingConstants.CENTER);
+        button.addActionListener(actionListener);
     }
 }

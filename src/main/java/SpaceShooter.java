@@ -6,11 +6,10 @@ import lombok.Setter;
 @Setter
 public class SpaceShooter {
     public static void main(String[] args) {
-        Controller.getInstance().run();
+        Controller.getInstance();
     }
 }
 //TODO
-// Button start
 // Regler vitesse
 // Refactoring
 // ಠ_ಠ   ⊂◉‿◉つ (╯✧▽✧)╯
