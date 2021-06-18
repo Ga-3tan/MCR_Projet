@@ -24,10 +24,11 @@ import static utils.RandomGenerator.randomInt;
 
 
 public class Controller {
-    private static final Dimension DIMENSION = new Dimension(512, 1074);
+
     private static Controller instance;
 
     private final JFrame frame = new JFrame();
+    private static final Dimension FRAME_DIMENSION = new Dimension(512, 1074);
     private final DisplayPanel displayPanel = new DisplayPanel(this);
     private final InfoPanel infoPanel = new InfoPanel(this);
     private static final String RESTART_IMG_PATH = "images/restart.png";
@@ -85,7 +86,7 @@ public class Controller {
             start.setVisible(false);
         });
         displayPanel.add(start, BorderLayout.CENTER);
-        frame.setPreferredSize(DIMENSION);
+        frame.setPreferredSize(FRAME_DIMENSION);
         frame.setVisible(true);
         frame.setResizable(false);
         frame.pack();
@@ -135,54 +136,43 @@ public class Controller {
         if (!playerMoving) // TODO sûr de la condition ?
             player.slowDown();
 
-        // Bouge le joueur
+        // Mouvements des GameObjects
         if (!player.isOutOf(displayPanel))
             player.move();
-
-        // Bouge les enemies + fire()
         for (GameObject enemy : enemies) {
             enemy.move();
             Shot shot = ((Ship) enemy).fire();
             if (shot != null) shots.add(shot);
         }
-        // Bouge les lasers
         for (GameObject shot : shots)
             shot.move();
-
-        // Bouge les asteroides
         for (GameObject decor : decorElements)
             decor.move();
 
         // Applique les mouvements
         applyKeys();
 
-        //Shots collision
+        // Collisions
         Collision.shotsCollisions(shots, decorElements, enemies, player);
-
-        //Player collisions
         Collision.playerCollisions(player, decorElements, enemies);
 
+        // Game over
         if (player.getHp() <= 0) {
             gameOver();
         }
 
-        // Pour chaque enemies, le supprime s'il est mort
+        // Suppression des GameObjets morts ou sortis de l'interface
         enemies.removeIf(enemy -> {
             Enemy e = (Enemy) enemy;
             boolean out = e.getHp() <= 0;
             if (out) score += e.getScoreValue();
             return out;
         });
-
-        // Pour chaque enemies, le supprime s'il est hors de l'interface
         enemies.removeIf(enemy -> enemy.isOutOf(displayPanel));
-
-        // Pour chaque asteroide, le supprime s'il est hors de l'interface
         decorElements.removeIf(decor -> decor.isOutOf(displayPanel));
-
-        // Pour chaque tir, le supprime s'il est hors de l'interface
         shots.removeIf(shot -> shot.isOutOf(displayPanel));
 
+        // Update affichage
         displayPanel.repaint();
         infoPanel.repaint();
     }
