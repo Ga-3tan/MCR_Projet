@@ -9,10 +9,5 @@ public class SpaceShooter {
         Controller.getInstance();
     }
 }
-//TODO
-// Regler vitesse
-// Refactoring
-// ಠ_ಠ   ⊂◉‿◉つ (╯✧▽✧)╯
 
-// A la fin
-// Doxygen
+// ಠ_ಠ
