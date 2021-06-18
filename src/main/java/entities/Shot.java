@@ -2,9 +2,23 @@ package entities;
 
 import lombok.Getter;
 import lombok.Setter;
+import java.awt.Point;
+import java.awt.Dimension;
 
-import java.awt.*;
-
+/**
+ * Prototype concret, représente un tir de vaisseau
+ *
+ * Name     : Shot
+ * File     : Shot.java
+ * JDK      : openjdk java 11.0.9
+ * @author Daniel Sciarra
+ * @author Rosalie Chhen
+ * @author Alessandro Parrino
+ * @author Gaétan Zwick
+ * @author Marco Maziero
+ * @version 1.0
+ * @since 18.06.2021
+ */
 @Getter
 @Setter
 public class Shot extends GameObject {

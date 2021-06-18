@@ -3,10 +3,24 @@ package entities.ships;
 import entities.GameObject;
 import entities.Shot;
 import lombok.Getter;
-
-import java.awt.*;
+import java.awt.Point;
+import java.awt.Dimension;
 import java.util.Date;
 
+/**
+ * Prototype concret, représente un vaisseau ennemi
+ *
+ * Name     : Enemy
+ * File     : Enemy.java
+ * JDK      : openjdk java 11.0.9
+ * @author Daniel Sciarra
+ * @author Rosalie Chhen
+ * @author Alessandro Parrino
+ * @author Gaétan Zwick
+ * @author Marco Maziero
+ * @version 1.0
+ * @since 18.06.2021
+ */
 @Getter
 public class Enemy extends Ship {
 

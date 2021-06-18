@@ -4,11 +4,26 @@ import entities.GameObject;
 import entities.Shot;
 import entities.ships.Enemy;
 import entities.ships.Player;
-
 import java.util.LinkedList;
 import java.util.List;
 
-public class Collision {
+/**
+ * Posède toutes les méthodes relatives à
+ * la gestion et la détection des collisions de GameObject
+ *
+ * Name     : Collision
+ * File     : Collision.java
+ * JDK      : openjdk java 11.0.9
+ * @author Daniel Sciarra
+ * @author Rosalie Chhen
+ * @author Alessandro Parrino
+ * @author Gaétan Zwick
+ * @author Marco Maziero
+ * @version 1.0
+ * @since 18.06.2021
+ */
+public abstract class Collision {
+
     /**
      * Vérifie la collision du Player avec les Asteroid et Enemy
      */

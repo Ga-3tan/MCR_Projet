@@ -8,21 +8,44 @@ import gameEngine.panels.DisplayPanel;
 import gameEngine.panels.InfoPanel;
 import entities.ships.Ship;
 import entities.Asteroid;
-
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.*;
-import java.util.*;
+import java.awt.Point;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.awt.Image;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.util.LinkedList;
+import java.util.Set;
+import java.util.HashSet;
 import java.util.List;
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JButton;
 import javax.swing.Timer;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
-
 import static entities.ships.Enemy.*;
 import static utils.RandomGenerator.randomInt;
 
-
+/**
+ * Gestion principale de la partie, contient toute la logique
+ * et la boucle de jeu
+ *
+ * Name     : Controller
+ * File     : Controller.java
+ * JDK      : openjdk java 11.0.9
+ * @author Daniel Sciarra
+ * @author Rosalie Chhen
+ * @author Alessandro Parrino
+ * @author Gaétan Zwick
+ * @author Marco Maziero
+ * @version 1.0
+ * @since 18.06.2021
+ */
 public class Controller {
 
     private static Controller instance;
