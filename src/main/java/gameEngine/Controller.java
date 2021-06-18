@@ -363,9 +363,9 @@ public class Controller {
      */
     public List<GameObject> getAllGameObjects() {
         List<GameObject> gameObjects = new LinkedList<>();
+        gameObjects.addAll(decorElements);
         gameObjects.add(player);
         gameObjects.addAll(enemies);
-        gameObjects.addAll(decorElements);
         gameObjects.addAll(shots);
         return gameObjects;
     }
