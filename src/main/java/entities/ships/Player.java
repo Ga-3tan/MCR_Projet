@@ -3,11 +3,26 @@ package entities.ships;
 import entities.GameObject;
 import entities.Shot;
 import gameEngine.panels.DisplayPanel;
-
-import java.awt.*;
+import java.awt.Point;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.awt.Image;
 import java.util.Date;
 
-
+/**
+ * Prototype concret, représente le vaisseau du joueur
+ *
+ * Name     : Player
+ * File     : Player.java
+ * JDK      : openjdk java 11.0.9
+ * @author Daniel Sciarra
+ * @author Rosalie Chhen
+ * @author Alessandro Parrino
+ * @author Gaétan Zwick
+ * @author Marco Maziero
+ * @version 1.0
+ * @since 18.06.2021
+ */
 public class Player extends Ship {
     private static final String PLAYER_PATH = "images/PNG/playerShip2_green.png";
     private static final String DEAD_PLAYER_PATH = "images/PNG/Damage/playerShip3_damage3.png";

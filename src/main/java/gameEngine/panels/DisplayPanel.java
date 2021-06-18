@@ -2,11 +2,30 @@ package gameEngine.panels;
 
 import entities.GameObject;
 import gameEngine.Controller;
-
 import javax.swing.JPanel;
-import java.awt.*;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.awt.Dimension;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Graphics;
 import java.util.List;
 
+/**
+ * Pannel ou sont affichés tous les éléments (GameObject) du jeu
+ * et le background
+ *
+ * Name     : DisplayPanel
+ * File     : DisplayPanel.java
+ * JDK      : openjdk java 11.0.9
+ * @author Daniel Sciarra
+ * @author Rosalie Chhen
+ * @author Alessandro Parrino
+ * @author Gaétan Zwick
+ * @author Marco Maziero
+ * @version 1.0
+ * @since 18.06.2021
+ */
 public class DisplayPanel extends JPanel {
     private static final Image BACKGROUND = Toolkit.getDefaultToolkit()
             .getImage(Thread.currentThread()

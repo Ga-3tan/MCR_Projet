@@ -1,10 +1,27 @@
 package gameEngine.panels;
 
 import gameEngine.Controller;
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import java.awt.Dimension;
+import java.awt.Color;
+import java.awt.GridLayout;
+import java.awt.Graphics;
 
-import javax.swing.*;
-import java.awt.*;
-
+/**
+ * Panel ou sont affichées les données de la partie (vie, score)
+ *
+ * Name     : InfoPanel
+ * File     : InfoPanel.java
+ * JDK      : openjdk java 11.0.9
+ * @author Daniel Sciarra
+ * @author Rosalie Chhen
+ * @author Alessandro Parrino
+ * @author Gaétan Zwick
+ * @author Marco Maziero
+ * @version 1.0
+ * @since 18.06.2021
+ */
 public class InfoPanel extends JPanel {
 
     private static final Dimension DIMENSION = new Dimension(576, 50);

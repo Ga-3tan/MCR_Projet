@@ -3,12 +3,23 @@ package entities.ships;
 import entities.GameObject;
 import entities.Shot;
 import lombok.Getter;
-
-
 import java.awt.Point;
 import java.awt.Dimension;
-import java.util.Date;
 
+/**
+ * Prototype concret, représente un vaisseau du jeu
+ *
+ * Name     : Ship
+ * File     : Ship.java
+ * JDK      : openjdk java 11.0.9
+ * @author Daniel Sciarra
+ * @author Rosalie Chhen
+ * @author Alessandro Parrino
+ * @author Gaétan Zwick
+ * @author Marco Maziero
+ * @version 1.0
+ * @since 18.06.2021
+ */
 @Getter
 abstract public class Ship extends GameObject {
     private final String RED_LASER_PATH = "images/PNG/Lasers/laserRed13.png";

@@ -3,11 +3,30 @@ package entities;
 import gameEngine.panels.DisplayPanel;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.awt.*;
+import java.awt.Image;
+import java.awt.Point;
+import java.awt.Dimension;
+import java.awt.Rectangle;
+import java.awt.Toolkit;
 import java.net.URL;
 import java.util.Random;
 
+/**
+ * Objet de jeu aparaissant à l'écran.
+ * Implémente le pattern prototype (représente le prototype abstrait) et
+ * possède donc la méthode abstraite  clone
+ *
+ * Name     : GameObject
+ * File     : GameObject.java
+ * JDK      : openjdk java 11.0.9
+ * @author Daniel Sciarra
+ * @author Rosalie Chhen
+ * @author Alessandro Parrino
+ * @author Gaétan Zwick
+ * @author Marco Maziero
+ * @version 1.0
+ * @since 18.06.2021
+ */
 @Getter
 @Setter
 abstract public class GameObject {
@@ -112,6 +131,11 @@ abstract public class GameObject {
         }
     }
 
+    /**
+     * Permet d'obtenir un objet Image depuis le dossier ressources
+     * @param pathAndFileName le chemin de l'image depuis le dossier resources
+     * @return L'objet Image récupéré
+     */
     private static Image getImage(final String pathAndFileName) {
         final URL url = Thread.currentThread().getContextClassLoader().getResource(pathAndFileName);
         return Toolkit.getDefaultToolkit().getImage(url);
