@@ -10,10 +10,10 @@ import java.util.Date;
 @Getter
 public class Enemy extends Ship {
 
-    public static final String BLACK_ENEMY_PATH = "images\\PNG\\Enemies\\enemyBlack3.png";
-    public static final String BLUE_ENEMY_PATH = "images\\PNG\\Enemies\\enemyBlue5.png";
-    public static final String GREEN_ENEMY_PATH = "images\\PNG\\Enemies\\enemyGreen2.png";
-    public static final String ORANGE_ENEMY_PATH = "images\\PNG\\Enemies\\enemyRed4.png";
+    public static final String BLACK_ENEMY_PATH = "images/PNG/Enemies/enemyBlack3.png";
+    public static final String BLUE_ENEMY_PATH = "images/PNG/Enemies/enemyBlue5.png";
+    public static final String GREEN_ENEMY_PATH = "images/PNG/Enemies/enemyGreen2.png";
+    public static final String ORANGE_ENEMY_PATH = "images/PNG/Enemies/enemyRed4.png";
 
     private long lastShotTime = 0;
     final private int scoreValue;

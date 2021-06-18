@@ -183,7 +183,11 @@ public class Controller {
     private void gameOver() {
         player.die();
         // Game Over label
-        Image gameOver = Toolkit.getDefaultToolkit().getImage(GAMME_OVER_IMG_PATH).getScaledInstance(GAMME_OVER_IMG_SIZE, GAMME_OVER_IMG_SIZE, Image.SCALE_FAST);
+        Image gameOver = Toolkit.getDefaultToolkit()
+                .getImage(Thread.currentThread()
+                        .getContextClassLoader()
+                        .getResource(GAMME_OVER_IMG_PATH))
+                .getScaledInstance(GAMME_OVER_IMG_SIZE, GAMME_OVER_IMG_SIZE, Image.SCALE_FAST);
         JLabel gameOverLabel = new JLabel(new ImageIcon(gameOver));
         // Restart bouton
         JButton restart = new JButton();
@@ -352,7 +356,11 @@ public class Controller {
      *                       ce que le bouton effectue sur un évènement
      */
     private void customizeButton(JButton button, String iconPath, ActionListener actionListener) {
-        Image icon = Toolkit.getDefaultToolkit().getImage(iconPath).getScaledInstance(200, 70, Image.SCALE_FAST);
+        Image icon = Toolkit.getDefaultToolkit()
+                .getImage(Thread.currentThread()
+                        .getContextClassLoader()
+                        .getResource(iconPath))
+                .getScaledInstance(200, 70, Image.SCALE_FAST);
         button.setIcon(new ImageIcon(icon));
         button.setBackground(new Color(58, 46, 53));
         button.setFocusable(false);
