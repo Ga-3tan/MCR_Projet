@@ -21,7 +21,7 @@ public class Player extends Ship {
      *
      * @param position       position actuelle du Player
      * @param movementVector vecteur de mouvement (vitesse et direction)
-     * @param size           taille du Player (carré)
+     * @param size           taille du Player
      * @param hp             hp de base du Player
      */
     public Player(Point position, Point movementVector, Dimension size, int hp) {

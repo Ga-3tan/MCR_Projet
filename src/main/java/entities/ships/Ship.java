@@ -27,7 +27,7 @@ abstract public class Ship extends GameObject {
      * @param spritePath     chemin vers le fichier du sprite
      * @param position       position actuelle du Ship
      * @param movementVector vecteur de mouvement (vitesse et direction)
-     * @param size           taille du Ship (carré)
+     * @param size           taille du Ship
      * @param hp             hp de base du Ship
      * @param shoot_delay    délais entre les tirs en ms
      * @param shoot_speed    vitesse des tirs tirés par le Ship

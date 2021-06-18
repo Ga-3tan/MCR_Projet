@@ -17,7 +17,7 @@ public class Shot extends GameObject {
      * @param spritePath     chemin vers le fichier du sprite
      * @param position       position actuelle du Shot
      * @param movementVector vecteur de mouvement (vitesse et direction)
-     * @param size           taille du Shot (carré)
+     * @param size           taille du Shot
      * @param friendly       friendliness du shot (vrai si vient du Player)
      * @param damage         dégat provoqué par le Shot
      */

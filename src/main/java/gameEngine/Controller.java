@@ -105,7 +105,7 @@ public class Controller {
      * Initialise le jeu
      */
     private void initGame() {
-        this.player = new Player(new Point(231, 920), new Point(0, 0), new Dimension(50, 50), 10);
+        this.player = new Player(new Point(231, 920), new Point(0, 0), new Dimension(50, 50), 5);
         enemies.clear();
         decorElements.clear();
         shots.clear();
@@ -299,10 +299,10 @@ public class Controller {
         asteroidsPrototypes.add(new Asteroid(new Dimension(25, 25), new Point(0, 4)));
 
         // ENEMIES
-        enemiesPrototypes.add(new Enemy(GREEN_ENEMY_PATH, new Point(0, 0), new Point(0, 3), new Dimension(50, 50), 2, 1500, 5, 100));
-        enemiesPrototypes.add(new Enemy(BLUE_ENEMY_PATH, new Point(0, 0), new Point(0, 2), new Dimension(50, 50), 4, 1500, 7, 150));
-        enemiesPrototypes.add(new Enemy(ORANGE_ENEMY_PATH, new Point(0, 0), new Point(0, 1), new Dimension(50, 50), 5, 2000, 10, 200));
-        enemiesPrototypes.add(new Enemy(BLACK_ENEMY_PATH, new Point(0, 0), new Point(0, 1), new Dimension(50, 50), 5, 2000, 12, 250));
+        enemiesPrototypes.add(new Enemy(GREEN_ENEMY_PATH, new Point(0, 0), new Point(0, 5), new Dimension(30, 30), 1, 1200, 10, 100));
+        enemiesPrototypes.add(new Enemy(BLUE_ENEMY_PATH, new Point(0, 0), new Point(0, 2), new Dimension(50, 50), 3, 1500, 7, 150));
+        enemiesPrototypes.add(new Enemy(ORANGE_ENEMY_PATH, new Point(0, 0), new Point(0, 1), new Dimension(70, 70), 5, 2500, 10, 200));
+        enemiesPrototypes.add(new Enemy(BLACK_ENEMY_PATH, new Point(0, 0), new Point(0, 1), new Dimension(160, 120), 8, 200, 5, 500));
 
     }
 
@@ -316,7 +316,7 @@ public class Controller {
         GameObject copy = enemiesPrototypes.get(index).clone();
 
         // Modifie les coordonnées de x de maniere aleatoire
-        int x = randomInt(50, frame.getWidth() - 50);
+        int x = randomInt(50, frame.getWidth() - copy.getSize().width);
         copy.setPosition(new Point(x, 0));
 
         //Ajoute dans la liste d'enemies

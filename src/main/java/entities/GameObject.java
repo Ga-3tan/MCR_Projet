@@ -26,7 +26,7 @@ abstract public class GameObject {
      * @param spritePath     chemin vers le fichier du sprite
      * @param position       position actuelle du GameObject
      * @param movementVector vecteur de mouvement (vitesse et direction)
-     * @param size           taille du GameObject (carré)
+     * @param size           taille du GameObject
      */
     public GameObject(String spritePath, Point position, Point movementVector, Dimension size) {
         Toolkit toolkit = Toolkit.getDefaultToolkit();

@@ -24,7 +24,7 @@ public class Enemy extends Ship {
      * @param path           chemin vers le fichier du sprite
      * @param position       position actuelle de Enemy
      * @param movementVector vecteur de mouvement (vitesse et direction)
-     * @param size           taille de Enemy (carré)
+     * @param size           taille de Enemy
      * @param hp             hp de base de Enemy
      * @param shoot_delay    délais entre les tirs en ms
      * @param shoot_speed    vitesse des tirs tirés par Enemy

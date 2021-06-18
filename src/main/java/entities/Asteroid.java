@@ -9,7 +9,7 @@ public class Asteroid extends GameObject {
     /**
      * Constructeur de Asteroid
      *
-     * @param size  taille de l'Asteroid (carré)
+     * @param size  taille de l'Asteroid
      * @param speed vecteur de mouvement (vitesse et direction)
      */
     public Asteroid(Dimension size, Point speed) {
