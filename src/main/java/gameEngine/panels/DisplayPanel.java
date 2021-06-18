@@ -29,9 +29,9 @@ import java.util.List;
 public class DisplayPanel extends JPanel {
     private static final Image BACKGROUND = Toolkit.getDefaultToolkit()
             .getImage(Thread.currentThread()
-                    .getContextClassLoader()
-                    .getResource("images/backgrounds/background_loop.png"));
-    private static final Dimension DIMENTION = new Dimension(512, 1024);
+            .getContextClassLoader()
+            .getResource("images/backgrounds/background_loop.png"));
+    private static final Dimension DIMENSION = new Dimension(512, 1024);
     private static final int BACKGROUND_SPEED = 1;
     private final Controller controller;
     private final int[] backgroundYPositions = new int[2];
@@ -48,7 +48,7 @@ public class DisplayPanel extends JPanel {
 
         // Initialisation des positions du background
         backgroundYPositions[0] = 0;
-        backgroundYPositions[1] = -DIMENTION.height;
+        backgroundYPositions[1] = -DIMENSION.height;
     }
 
     /**
@@ -78,9 +78,9 @@ public class DisplayPanel extends JPanel {
      */
     private void updateBackgroundPositions() {
         // Checks for background position reset
-        if (backgroundYPositions[0] > DIMENTION.height)
-            backgroundYPositions[0] = backgroundYPositions[1] - DIMENTION.height;
-        else if (backgroundYPositions[1] > DIMENTION.height)
-            backgroundYPositions[1] = backgroundYPositions[0] - DIMENTION.height;
+        if (backgroundYPositions[0] > DIMENSION.height)
+            backgroundYPositions[0] = backgroundYPositions[1] - DIMENSION.height;
+        else if (backgroundYPositions[1] > DIMENSION.height)
+            backgroundYPositions[1] = backgroundYPositions[0] - DIMENSION.height;
     }
 }

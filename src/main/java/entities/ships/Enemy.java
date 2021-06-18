@@ -35,7 +35,7 @@ public class Enemy extends Ship {
     /**
      * Constructeur de Enemy
      *
-     * @param path           chemin vers le fichier du sprite
+     * @param spritePath     chemin vers le fichier du sprite
      * @param position       position actuelle de Enemy
      * @param movementVector vecteur de mouvement (vitesse et direction)
      * @param size           taille de Enemy
@@ -44,8 +44,8 @@ public class Enemy extends Ship {
      * @param shoot_speed    vitesse des tirs tirés par Enemy
      * @param scoreValue     score reçu lors de sa déstruction
      */
-    public Enemy(String path, Point position, Point movementVector, Dimension size, int hp, int shoot_delay, int shoot_speed, int scoreValue) {
-        super(path, position, movementVector, size, hp, shoot_delay, shoot_speed);
+    public Enemy(String spritePath, Point position, Point movementVector, Dimension size, int hp, int shoot_delay, int shoot_speed, int scoreValue) {
+        super(spritePath, position, movementVector, size, hp, shoot_delay, shoot_speed);
         this.scoreValue = scoreValue;
     }
 

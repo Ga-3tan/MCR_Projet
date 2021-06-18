@@ -145,7 +145,7 @@ public class Controller {
     /**
      * Arrête les timers (permet de mettre le jeu en pause / l'arrêter)
      */
-    public void stopTimers() {
+    private void stopTimers() {
         for (Timer t : timers)
             t.stop();
     }
