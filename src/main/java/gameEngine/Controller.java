@@ -30,22 +30,25 @@ public class Controller {
     private final JFrame frame = new JFrame();
     private final DisplayPanel displayPanel = new DisplayPanel(this);
     private final InfoPanel infoPanel = new InfoPanel(this);
-
-    private int score;
+    private static final String RESTART_IMG_PATH = "images/restart.png";
+    private static final String GAMME_OVER_IMG_PATH = "images/game-over.png";
+    private static final int GAMME_OVER_IMG_SIZE = 400;
 
     private final Set<Integer> activeKeys = new HashSet<>();
     private List<Timer> timers = new LinkedList<>();
 
-
     // Elements du jeu
     private Player player;
+    private final int playerSize = 50;
+    private final Point playerInitPosition = new Point(231, 920);
+    private final int playerHp = 5;
     private boolean playerMoving;
+    private int score;
 
     //List of game objects
     private final LinkedList<GameObject> enemies = new LinkedList<>();
     private final LinkedList<GameObject> decorElements = new LinkedList<>();
     private final LinkedList<GameObject> shots = new LinkedList<>();
-
 
     // Prototypes
     private final LinkedList<Ship> enemiesPrototypes = new LinkedList<>();
@@ -67,7 +70,7 @@ public class Controller {
      * Constructeur privé du Controller (privé car Controller = Singleton)
      */
     private Controller() {
-        //this.player = new Player(new Point(231, 920), new Point(0, 0), new Dimension(50, 50), 10);
+        initGame();
 
         // Initialise les frames et panels
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -77,7 +80,7 @@ public class Controller {
         displayPanel.setLayout(new BorderLayout());
         displayPanel.setBorder(new EmptyBorder(200, 10, 200, 10));
         JButton start = new JButton();
-        customButton(start, "images/start.png", actionEvent -> {
+        customizeButton(start, "images/start.png", actionEvent -> {
             run();
             start.setVisible(false);
         });
@@ -88,24 +91,19 @@ public class Controller {
         frame.pack();
         initializePrototypes();
 
-//        int speed = 0;
-//        int pause = 0;
         movePlayer();
 
         // Initialise le timer de jeu
         timers.add(new Timer(17, evt -> update()));
         timers.add(new Timer(10000, evt -> spawnAsteroids()));
         timers.add(new Timer(4000, evt -> spawnEnemies()));
-
-        initGame();
-
     }
 
     /**
      * Initialise le jeu
      */
     private void initGame() {
-        this.player = new Player(new Point(231, 920), new Point(0, 0), new Dimension(50, 50), 5);
+        this.player = new Player(playerInitPosition, new Point(0, 0), new Dimension(playerSize, playerSize), playerHp);
         enemies.clear();
         decorElements.clear();
         shots.clear();
@@ -159,29 +157,13 @@ public class Controller {
         applyKeys();
 
         //Shots collision
-        shotsCollisions();
+        Collision.shotsCollisions(shots, decorElements, enemies, player);
 
         //Player collisions
-        playerCollisions();
+        Collision.playerCollisions(player, decorElements, enemies);
 
         if (player.getHp() <= 0) {
-            player.die();
-            // Game Over label
-            Image gameOver = Toolkit.getDefaultToolkit().getImage("images/game-over.png").getScaledInstance(400, 400, Image.SCALE_FAST);
-            JLabel gameOverLabel = new JLabel(new ImageIcon(gameOver));
-            // Restart bouton
-            JButton restart = new JButton();
-            customButton(restart, "images/restart.png", actionEvent -> {
-                initGame();
-                displayPanel.remove(gameOverLabel);
-                restart.setVisible(false);
-                run();
-            });
-
-            displayPanel.add(gameOverLabel, BorderLayout.CENTER);
-            displayPanel.add(restart, BorderLayout.SOUTH);
-
-            stopTimers();
+            gameOver();
         }
 
         // Pour chaque enemies, le supprime s'il est mort
@@ -206,92 +188,32 @@ public class Controller {
     }
 
     /**
-     * Vérifie la collision du Player avec les Asteroid et Enemy
+     * Gère le game over (arrêt du jeu et affichage)
      */
-    private void playerCollisions() {
-        playerCollisionGameObject(decorElements);
-        playerCollisionGameObject(enemies);
-    }
+    private void gameOver() {
+        player.die();
+        // Game Over label
+        Image gameOver = Toolkit.getDefaultToolkit().getImage(GAMME_OVER_IMG_PATH).getScaledInstance(GAMME_OVER_IMG_SIZE, GAMME_OVER_IMG_SIZE, Image.SCALE_FAST);
+        JLabel gameOverLabel = new JLabel(new ImageIcon(gameOver));
+        // Restart bouton
+        JButton restart = new JButton();
+        customizeButton(restart, RESTART_IMG_PATH, actionEvent -> {
+            initGame();
+            displayPanel.remove(gameOverLabel);
+            restart.setVisible(false);
+            run();
+        });
 
-    /**
-     * Vérifie la colision des Shot avec les GameObject de gameObjectList
-     *
-     * @param gameObjectList dont il faut vérifier la collision avec le Player
-     */
-    private void playerCollisionGameObject(List<GameObject> gameObjectList) {
-        for (GameObject gameObject : gameObjectList) {
-            if (player.getHitbox().intersects(gameObject.getHitbox())) {
-                player.setHp(0); // kill player
-            }
-        }
-    }
+        displayPanel.add(gameOverLabel, BorderLayout.CENTER);
+        displayPanel.add(restart, BorderLayout.SOUTH);
 
-    /**
-     * Vérifie la colision des Shot avec les autres GameObjects
-     */
-    private void shotsCollisions() {
-        for (int i = 0; i < shots.size(); ) {
-            Shot shot = (Shot) shots.get(i);
-            boolean shotDestroyed = shotAsteroidCollision(shot) || shotEnemyCollision(shot) || shotPlayerCollision(shot);
-            if (!shotDestroyed) i++;
-        }
-    }
-
-    /**
-     * Vérifie la colision d'un Shot avec un Asteroid et le retire de la list des Shot si collision
-     *
-     * @param shot tir dont il faut vérifier la collision
-     * @return vrai s'il y a collision
-     */
-    private boolean shotAsteroidCollision(Shot shot) {
-        for (GameObject asteroid : decorElements) {
-            if (asteroid.getHitbox().intersects(shot.getHitbox())) {
-                shots.remove(shot);
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Vérifie la colision d'un Shot avec un Enemy et le retire de la list des Shot si collision
-     *
-     * @param shot tir dont il faut vérifier la collision
-     * @return vrai s'il y a collision
-     */
-    private boolean shotEnemyCollision(Shot shot) {
-        if (shot.getFriendly()) {
-            for (GameObject enemy : enemies) {
-                if (enemy.getHitbox().intersects(shot.getHitbox())) {
-                    ((Enemy) enemy).reduceHP(shot.getDamage());
-                    shots.remove(shot);
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Vérifie la colision d'un Shot avec le Player et le retire de la list des Shot si collision
-     *
-     * @param shot tir dont il faut vérifier la collision
-     * @return vrai s'il y a collision
-     */
-    private boolean shotPlayerCollision(Shot shot) {
-        if (!shot.getFriendly() && player.getHitbox().intersects(shot.getHitbox())) {
-            player.reduceHP(shot.getDamage());
-            shots.remove(shot);
-            return true;
-        }
-        return false;
+        stopTimers();
     }
 
     /**
      * Initialise tous les prototypes
      */
     private void initializePrototypes() {
-
         // ASTEROIDS
         asteroidsPrototypes.add(new Asteroid(new Dimension(90, 90), new Point(0, 2)));
         asteroidsPrototypes.add(new Asteroid(new Dimension(75, 75), new Point(0, 4)));
@@ -303,14 +225,12 @@ public class Controller {
         enemiesPrototypes.add(new Enemy(BLUE_ENEMY_PATH, new Point(0, 0), new Point(0, 2), new Dimension(50, 50), 3, 1500, 7, 150));
         enemiesPrototypes.add(new Enemy(ORANGE_ENEMY_PATH, new Point(0, 0), new Point(0, 1), new Dimension(70, 70), 5, 2500, 10, 200));
         enemiesPrototypes.add(new Enemy(BLACK_ENEMY_PATH, new Point(0, 0), new Point(0, 1), new Dimension(160, 120), 8, 200, 5, 500));
-
     }
 
     /**
      * Créer des clones des prototypes d'enemies de maniere aleatoire
      */
     private void spawnEnemies() {
-
         // Récupère un enemi au hasard depuis la liste de prototypes d'enemis (enemiesProtype)
         int index = randomInt(0, enemiesPrototypes.size() - 1);
         GameObject copy = enemiesPrototypes.get(index).clone();
@@ -333,13 +253,14 @@ public class Controller {
         decorElements.add(copy);
     }
 
+    /**
+     * @return le joueur
+     */
     public Player getPlayer() {
         return player;
     }
 
     /**
-     * Retourne le score actuel
-     *
      * @return le score actuel
      */
     public int getScore() {
@@ -350,7 +271,6 @@ public class Controller {
      * Bouge le joueur lors de la pression d'une touche TODO
      */
     public void movePlayer() {
-
         // Gestion
         frame.addKeyListener(new KeyAdapter() {
 
@@ -434,14 +354,14 @@ public class Controller {
     }
 
     /**
-     * Customise et défini l'action à effecture du bouton passé en paramètre
+     * Customise et défini l'action à effectuer du bouton passé en paramètre
      *
      * @param button         Un JButton à customiser et définir
      * @param iconPath       Le path jusqu'à l'image de l'icône du bouton
      * @param actionListener Un objet implémentant l'interface ActionListener qui défini
      *                       ce que le bouton effectue sur un évènement
      */
-    private void customButton(JButton button, String iconPath, ActionListener actionListener) {
+    private void customizeButton(JButton button, String iconPath, ActionListener actionListener) {
         Image icon = Toolkit.getDefaultToolkit().getImage(iconPath).getScaledInstance(200, 70, Image.SCALE_FAST);
         button.setIcon(new ImageIcon(icon));
         button.setBackground(new Color(58, 46, 53));
