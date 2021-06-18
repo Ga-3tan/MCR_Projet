@@ -8,26 +8,27 @@ import java.awt.*;
 import java.util.Date;
 
 @Getter
-public class Enemy extends Ship{
+public class Enemy extends Ship {
 
-    public static final String BLACK_ENEMY_PATH ="images\\PNG\\Enemies\\enemyBlack3.png";
-    public static final String BLUE_ENEMY_PATH="images\\PNG\\Enemies\\enemyBlue5.png";
-    public static final String GREEN_ENEMY_PATH="images\\PNG\\Enemies\\enemyGreen2.png";
-    public static final String ORANGE_ENEMY_PATH="images\\PNG\\Enemies\\enemyRed4.png";
+    public static final String BLACK_ENEMY_PATH = "images\\PNG\\Enemies\\enemyBlack3.png";
+    public static final String BLUE_ENEMY_PATH = "images\\PNG\\Enemies\\enemyBlue5.png";
+    public static final String GREEN_ENEMY_PATH = "images\\PNG\\Enemies\\enemyGreen2.png";
+    public static final String ORANGE_ENEMY_PATH = "images\\PNG\\Enemies\\enemyRed4.png";
 
     private long lastShotTime = 0;
     final private int scoreValue;
 
     /**
+     * Constructeur de Enemy
      *
-     * @param path
-     * @param position
-     * @param movementVector
-     * @param size
-     * @param hp
-     * @param shoot_delay
-     * @param shoot_speed
-     * @param scoreValue
+     * @param path           chemin vers le fichier du sprite
+     * @param position       position actuelle de Enemy
+     * @param movementVector vecteur de mouvement (vitesse et direction)
+     * @param size           taille de Enemy (carré)
+     * @param hp             hp de base de Enemy
+     * @param shoot_delay    délais entre les tirs en ms
+     * @param shoot_speed    vitesse des tirs tirés par Enemy
+     * @param scoreValue     score reçu lors de sa déstruction
      */
     public Enemy(String path, Point position, Point movementVector, Dimension size, int hp, int shoot_delay, int shoot_speed, int scoreValue) {
         super(path, position, movementVector, size, hp, shoot_delay, shoot_speed);
@@ -35,8 +36,8 @@ public class Enemy extends Ship{
     }
 
     /**
-     *
-     * @param enemy
+     * Constructeur de copie de Enemy
+     * @param enemy instance à copier
      */
     public Enemy(Enemy enemy) {
         super(enemy.getSpritePath(), enemy.getPosition(), enemy.getMovementVector(), enemy.getSize(), enemy.getHp(), enemy.getShoot_delay(), enemy.getShoot_speed());
@@ -44,8 +45,9 @@ public class Enemy extends Ship{
     }
 
     /**
+     * Clone l'instance de Enemy (partie du pattern prototype)
      *
-     * @return
+     * @return copie du Enemy en tant que GameObject
      */
     @Override
     public GameObject clone() {
@@ -53,8 +55,10 @@ public class Enemy extends Ship{
     }
 
     /**
+     * Créer une copie à partir du prototype redLaser et lui assigne
+     * une nouvelle position, friendliness, damage et vecteur de vitesse
      *
-     * @return
+     * @return clone du prototype redLaser tiré
      */
     @Override
     public Shot fire() {

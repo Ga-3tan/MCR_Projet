@@ -13,7 +13,7 @@ public class InfoPanel extends JPanel {
     JLabel life;
 
     /**
-     *
+     * Paint le Component
      * @param controller
      */
     public InfoPanel(Controller controller) {
@@ -39,8 +39,8 @@ public class InfoPanel extends JPanel {
     }
 
     /**
-     *
-     * @param g
+     * Paint le Component
+     * @param g graphics où peindre
      */
     @Override
     public void paintComponent(Graphics g) {

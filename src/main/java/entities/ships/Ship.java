@@ -22,15 +22,15 @@ abstract public class Ship extends GameObject {
     protected final Shot redLaser = new Shot(RED_LASER_PATH, new Point(), new Point(), new Dimension(4, 15), null, 1);
 
     /**
-     * Constructor of abstract class Ship
+     * Constructeur de la classe abstraite Ship
      *
-     * @param spritePath     path to the ship sprite file
-     * @param position       current position of the ship
-     * @param movementVector vector for movement (speed and direction)
-     * @param size           size of the ship (square)
-     * @param hp             base hp of the ship
-     * @param shoot_delay    delay between shots in ms
-     * @param shoot_speed    speed of the shots fired by the ship
+     * @param spritePath     chemin vers le fichier du sprite
+     * @param position       position actuelle du Ship
+     * @param movementVector vecteur de mouvement (vitesse et direction)
+     * @param size           taille du Ship (carré)
+     * @param hp             hp de base du Ship
+     * @param shoot_delay    délais entre les tirs en ms
+     * @param shoot_speed    vitesse des tirs tirés par le Ship
      */
     public Ship(String spritePath, Point position, Point movementVector, Dimension size, int hp, int shoot_delay, int shoot_speed) {
         super(spritePath, position, movementVector, size);
@@ -40,9 +40,9 @@ abstract public class Ship extends GameObject {
     }
 
     /**
-     * Reduce the current HP of the ship
+     * Réduit les hp actuel du Ship
      *
-     * @param damage damage recieved by the ship
+     * @param damage dégats reçus
      */
     public void reduceHP(int damage) {
         if (this.getHp() - damage <= 0) {
@@ -53,18 +53,18 @@ abstract public class Ship extends GameObject {
     }
 
     /**
-     * set the ship hp
+     * modifie l'hp du Ship
      *
-     * @param hp hp to set
+     * @param hp hp à assigner
      */
     public void setHp(int hp) {
         this.hp = hp;
     }
 
     /**
-     * Create a new copy of the shot prototype linked to the ship
+     * Créer une copie d'un Shot à partir du lié au Ship
      *
-     * @return clone of the Shot type of the ship
+     * @return clone du prototype de Shot lié au vaisseau
      */
     public abstract Shot fire();
 

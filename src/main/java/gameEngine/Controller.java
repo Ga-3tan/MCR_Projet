@@ -9,14 +9,12 @@ import gameEngine.panels.InfoPanel;
 import entities.ships.Ship;
 import entities.Asteroid;
 
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.*;
 import java.util.*;
 import java.util.List;
-import java.util.concurrent.locks.ReentrantLock;
 import javax.swing.*;
 import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
@@ -28,7 +26,6 @@ import static utils.RandomGenerator.randomInt;
 public class Controller {
     private static final Dimension DIMENSION = new Dimension(512, 1074);
     private static Controller instance;
-    private ReentrantLock mutex = new ReentrantLock();
 
     private final JFrame frame = new JFrame();
     private final DisplayPanel displayPanel = new DisplayPanel(this);
@@ -55,8 +52,9 @@ public class Controller {
     private final LinkedList<Asteroid> asteroidsPrototypes = new LinkedList<>();
 
     /**
+     * Retourne l'instance unique du Controller (Singleton)
      *
-     * @return
+     * @return l'instance unique du Controller
      */
     public static Controller getInstance() {
         if (instance == null)
@@ -66,7 +64,7 @@ public class Controller {
     }
 
     /**
-     *
+     * Constructeur privé du Controller (privé car Controller = Singleton)
      */
     private Controller() {
         //this.player = new Player(new Point(231, 920), new Point(0, 0), new Dimension(50, 50), 10);
@@ -94,7 +92,7 @@ public class Controller {
 //        int pause = 0;
         movePlayer();
 
-        // Initialise le taimer de jeu
+        // Initialise le timer de jeu
         timers.add(new Timer(17, evt -> update()));
         timers.add(new Timer(10000, evt -> spawnAsteroids()));
         timers.add(new Timer(4000, evt -> spawnEnemies()));
@@ -104,9 +102,9 @@ public class Controller {
     }
 
     /**
-     *
+     * Initialise le jeu
      */
-    private void initGame(){
+    private void initGame() {
         this.player = new Player(new Point(231, 920), new Point(0, 0), new Dimension(50, 50), 10);
         enemies.clear();
         decorElements.clear();
@@ -115,7 +113,7 @@ public class Controller {
     }
 
     /**
-     *
+     * Lance le jeu (lance les timers)
      */
     public void run() {
         for (Timer t : timers)
@@ -123,7 +121,7 @@ public class Controller {
     }
 
     /**
-     *
+     * Arrête les timers (permet de mettre le jeu en pause / l'arrêter)
      */
     public void stopTimers() {
         for (Timer t : timers)
@@ -169,7 +167,7 @@ public class Controller {
         if (player.getHp() <= 0) {
             player.die();
             // Game Over label
-            Image gameOver = Toolkit.getDefaultToolkit().getImage("images/game-over.png").getScaledInstance(400, 400,Image.SCALE_FAST);
+            Image gameOver = Toolkit.getDefaultToolkit().getImage("images/game-over.png").getScaledInstance(400, 400, Image.SCALE_FAST);
             JLabel gameOverLabel = new JLabel(new ImageIcon(gameOver));
             // Restart bouton
             JButton restart = new JButton();
@@ -180,7 +178,7 @@ public class Controller {
                 run();
             });
 
-            displayPanel.add(gameOverLabel,BorderLayout.CENTER);
+            displayPanel.add(gameOverLabel, BorderLayout.CENTER);
             displayPanel.add(restart, BorderLayout.SOUTH);
 
             stopTimers();
@@ -207,10 +205,8 @@ public class Controller {
         infoPanel.repaint();
     }
 
-    /* COLLISIONS */
-
     /**
-     *
+     * Vérifie la collision du Player avec les Asteroid et Enemy
      */
     private void playerCollisions() {
         playerCollisionGameObject(decorElements);
@@ -218,8 +214,9 @@ public class Controller {
     }
 
     /**
+     * Vérifie la colision des Shot avec les GameObject de gameObjectList
      *
-     * @param gameObjectList
+     * @param gameObjectList dont il faut vérifier la collision avec le Player
      */
     private void playerCollisionGameObject(List<GameObject> gameObjectList) {
         for (GameObject gameObject : gameObjectList) {
@@ -230,7 +227,7 @@ public class Controller {
     }
 
     /**
-     *
+     * Vérifie la colision des Shot avec les autres GameObjects
      */
     private void shotsCollisions() {
         for (int i = 0; i < shots.size(); ) {
@@ -241,9 +238,10 @@ public class Controller {
     }
 
     /**
+     * Vérifie la colision d'un Shot avec un Asteroid et le retire de la list des Shot si collision
      *
-     * @param shot
-     * @return
+     * @param shot tir dont il faut vérifier la collision
+     * @return vrai s'il y a collision
      */
     private boolean shotAsteroidCollision(Shot shot) {
         for (GameObject asteroid : decorElements) {
@@ -256,9 +254,10 @@ public class Controller {
     }
 
     /**
+     * Vérifie la colision d'un Shot avec un Enemy et le retire de la list des Shot si collision
      *
-     * @param shot
-     * @return
+     * @param shot tir dont il faut vérifier la collision
+     * @return vrai s'il y a collision
      */
     private boolean shotEnemyCollision(Shot shot) {
         if (shot.getFriendly()) {
@@ -274,9 +273,10 @@ public class Controller {
     }
 
     /**
+     * Vérifie la colision d'un Shot avec le Player et le retire de la list des Shot si collision
      *
-     * @param shot
-     * @return
+     * @param shot tir dont il faut vérifier la collision
+     * @return vrai s'il y a collision
      */
     private boolean shotPlayerCollision(Shot shot) {
         if (!shot.getFriendly() && player.getHitbox().intersects(shot.getHitbox())) {
@@ -287,14 +287,11 @@ public class Controller {
         return false;
     }
 
-    /* PROTOTYPE INITIALIZATIONS */
-
     /**
-     *
+     * Initialise tous les prototypes
      */
     private void initializePrototypes() {
 
-        // Initialiser tous les prototypes
         // ASTEROIDS
         asteroidsPrototypes.add(new Asteroid(new Dimension(90, 90), new Point(0, 2)));
         asteroidsPrototypes.add(new Asteroid(new Dimension(75, 75), new Point(0, 4)));
@@ -314,11 +311,11 @@ public class Controller {
      */
     private void spawnEnemies() {
 
-        // Get a random enemy from enemiesProtype
+        // Récupère un enemi au hasard depuis la liste de prototypes d'enemis (enemiesProtype)
         int index = randomInt(0, enemiesPrototypes.size() - 1);
         GameObject copy = enemiesPrototypes.get(index).clone();
 
-        // Set la coord x de maniere aleatoire
+        // Modifie les coordonnées de x de maniere aleatoire
         int x = randomInt(50, frame.getWidth() - 50);
         copy.setPosition(new Point(x, 0));
 
@@ -340,10 +337,18 @@ public class Controller {
         return player;
     }
 
+    /**
+     * Retourne le score actuel
+     *
+     * @return le score actuel
+     */
     public int getScore() {
         return score;
     }
 
+    /**
+     * Bouge le joueur lors de la pression d'une touche TODO
+     */
     public void movePlayer() {
 
         // Gestion
@@ -364,7 +369,7 @@ public class Controller {
     }
 
     /**
-     *
+     * Applique l'action des touches qui ont été enregistrées
      */
     private void applyKeys() {
         for (int key : activeKeys) {
@@ -431,15 +436,15 @@ public class Controller {
     /**
      * Customise et défini l'action à effecture du bouton passé en paramètre
      *
-     * @param button Un JButton à customiser et définir
-     * @param iconPath Le path jusqu'à l'image de l'icône du bouton
+     * @param button         Un JButton à customiser et définir
+     * @param iconPath       Le path jusqu'à l'image de l'icône du bouton
      * @param actionListener Un objet implémentant l'interface ActionListener qui défini
      *                       ce que le bouton effectue sur un évènement
      */
-    private void customButton(JButton button, String iconPath, ActionListener actionListener){
-        Image icon = Toolkit.getDefaultToolkit().getImage(iconPath).getScaledInstance(200, 70,Image.SCALE_FAST);
+    private void customButton(JButton button, String iconPath, ActionListener actionListener) {
+        Image icon = Toolkit.getDefaultToolkit().getImage(iconPath).getScaledInstance(200, 70, Image.SCALE_FAST);
         button.setIcon(new ImageIcon(icon));
-        button.setBackground(new Color(58, 46,53));
+        button.setBackground(new Color(58, 46, 53));
         button.setFocusable(false);
         button.setBorderPainted(false);
         button.setFocusPainted(false);

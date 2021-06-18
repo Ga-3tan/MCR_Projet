@@ -14,18 +14,19 @@ abstract public class GameObject {
     private Image sprite;
     private String spritePath;
     private Point position;
-    private Point movementVector; //Speed vector
+    private Point movementVector;
     private Dimension size;
-    private Rectangle hitbox; // on utilise .intersects(Rectangle r) pour check la collision
+    private Rectangle hitbox;
 
     Random rand = new Random();
 
     /**
+     * Constructeur de la classe abstraite GameObject
      *
-     * @param spritePath
-     * @param position
-     * @param movementVector
-     * @param size
+     * @param spritePath     chemin vers le fichier du sprite
+     * @param position       position actuelle du GameObject
+     * @param movementVector vecteur de mouvement (vitesse et direction)
+     * @param size           taille du GameObject (carré)
      */
     public GameObject(String spritePath, Point position, Point movementVector, Dimension size) {
         Toolkit toolkit = Toolkit.getDefaultToolkit();
@@ -39,7 +40,7 @@ abstract public class GameObject {
     }
 
     /**
-     *
+     * Bouge le GameObject
      */
     public void move() {
         this.setPosition(new Point(
@@ -50,56 +51,53 @@ abstract public class GameObject {
     }
 
     /**
+     * Clone l'instance de GameObject (partie du pattern prototype)
      *
-     * @return
+     * @return copie du GameObject
      */
     public abstract GameObject clone();
 
     /**
-     * Vérifie si la position du gameObject est hors de l'interface verticalement
-     * @return true s'il est hors de l'interface, false sinon
-     * */
-    public boolean isOutOf(DisplayPanel displayPanel){
+     * Vérifie si le Player et hors des limites verticalement du displayPanel
+     *
+     * @param displayPanel zone où doit se trouver le Player
+     * @return vrai si le Player est hors des limites verticale du displayPanel
+     */
+    public boolean isOutOf(DisplayPanel displayPanel) {
         return this.getPosition().getY() > displayPanel.getHeight()/*
                 || this.getPosition().getY() < 0*/;
     }
 
     /**
      * Donne une valeur aléatoire sur l'axe X
-     * */
-    public void randomizePositionOnX(int frameWidth){
-        int x = rand.nextInt(frameWidth+getSize().width) - getSize().width;
+     *
+     * @param frameWidth larger de la zone d'apparition
+     */
+    public void randomizePositionOnX(int frameWidth) {
+        int x = rand.nextInt(frameWidth + getSize().width) - getSize().width;
         this.setPosition(new Point(x, -getSize().height));
     }
 
     /**
-     * Donne une vitesse aléatoire
-     * TODO (à modifier)
-     * */
-    public void randomizeSpeed(){
-        // TODO changer movementVector en Point2D pour plus de précision dans l'intervalle ?
-        int dy = rand.nextInt(2) + 1; // varie entre 1 et 2, ce n'est pas beaucoup
-        this.setMovementVector(new Point(0, dy));
-    }
-
-    /**
+     * Retourne le X la vitesse/direction
      *
-     * @return
+     * @return X du vecteur de mouvement
      */
     public int getDeltaX() {
         return (int) getMovementVector().getX();
     }
 
     /**
+     * Retourne le Y la vitesse/direction
      *
-     * @return
+     * @return Y du vecteur de mouvement
      */
     public int getDeltaY() {
         return (int) getMovementVector().getY();
     }
 
     /**
-     *
+     * Ralenti le GameObject (évite un arrêt brusque)
      */
     public void slowDown() {
         if (this.getDeltaX() > 0) {

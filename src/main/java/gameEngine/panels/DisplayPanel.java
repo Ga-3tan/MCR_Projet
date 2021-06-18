@@ -2,6 +2,7 @@ package gameEngine.panels;
 
 import entities.GameObject;
 import gameEngine.Controller;
+
 import javax.swing.JPanel;
 import java.awt.*;
 import java.util.List;
@@ -14,6 +15,7 @@ public class DisplayPanel extends JPanel {
     private final int[] backgroundYPositions = new int[2];
 
     /**
+     * Constructeur du DisplayPanel
      *
      * @param controller
      */
@@ -28,16 +30,17 @@ public class DisplayPanel extends JPanel {
     }
 
     /**
+     * Paint le Component
      *
-     * @param g
+     * @param g graphics où peindre
      */
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
         // Moves the background
-        g.drawImage(BACKGROUND, 0, backgroundYPositions[0] += BACKGROUND_SPEED,this);
-        g.drawImage(BACKGROUND, 0, backgroundYPositions[1] += BACKGROUND_SPEED,this);
+        g.drawImage(BACKGROUND, 0, backgroundYPositions[0] += BACKGROUND_SPEED, this);
+        g.drawImage(BACKGROUND, 0, backgroundYPositions[1] += BACKGROUND_SPEED, this);
         updateBackgroundPositions();
 
         // Displays all the game objects
@@ -49,7 +52,7 @@ public class DisplayPanel extends JPanel {
     }
 
     /**
-     *
+     * Met à jour la position du background (pour le faire défiler)
      */
     private void updateBackgroundPositions() {
         // Checks for background position reset

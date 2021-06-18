@@ -17,37 +17,37 @@ public class Player extends Ship {
     long lastShotTime = 0;
 
     /**
-     * Constructor for the Player
+     * Constructeur de Player
      *
-     * @param position       current position of the player
-     * @param movementVector vector for movement (speed and direction)
-     * @param size           size of the player (square)
-     * @param hp             base hp of the player
+     * @param position       position actuelle du Player
+     * @param movementVector vecteur de mouvement (vitesse et direction)
+     * @param size           taille du Player (carré)
+     * @param hp             hp de base du Player
      */
     public Player(Point position, Point movementVector, Dimension size, int hp) {
         super(PLAYER_PATH, position, movementVector, size, hp, SHOOT_DELAY, SHOOT_SPEED);
     }
 
     /**
-     * copy constructor of the player
+     * Constructeur de copie de Player
      *
-     * @param copy instance to copy from
+     * @param copy instance à copier
      */
     public Player(Player copy) {
         super(PLAYER_PATH, copy.getPosition(), copy.getMovementVector(), copy.getSize(), copy.getHp(), copy.getShoot_delay(), copy.getShoot_speed());
     }
 
     /**
-     * called when the player die
+     * Appelé quand le Player meurt
      */
     public void die() {
         this.setSprite(Toolkit.getDefaultToolkit().getImage(DEAD_PLAYER_PATH).getScaledInstance(50, 50, Image.SCALE_DEFAULT));
     }
 
     /**
-     * clone the player instance (part of the prototype pattern)
+     * Clone l'instance de Player (partie du pattern prototype)
      *
-     * @return GameObject (abstract prototype) instance of the copy of Player
+     * @return copie du Player en tant que GameObject
      */
     @Override
     public GameObject clone() {
@@ -55,10 +55,10 @@ public class Player extends Ship {
     }
 
     /**
-     * Create a new copy of the greenLaser prototype
-     * and set its new position, friendliness, damage and speed vector
+     * Créer une copie à partir du prototype greenLaser et lui assigne
+     * une nouvelle position, friendliness, damage et vecteur de vitesse
      *
-     * @return clone of the greenLaser prototype shot by the ship
+     * @return clone du prototype greenLaser tiré
      */
     @Override
     public Shot fire() {
@@ -78,10 +78,10 @@ public class Player extends Ship {
     }
 
     /**
-     * check if the Player is out of the displayPanel bound
+     * Vérifie si le Player et hors des limites du displayPanel
      *
-     * @param displayPanel area where the Player should be
-     * @return true if the Player is out of the displayPanel bound
+     * @param displayPanel zone où doit se trouver le Player
+     * @return vrai si le Player est hors des limites du displayPanel
      */
     @Override
     public boolean isOutOf(DisplayPanel displayPanel) {

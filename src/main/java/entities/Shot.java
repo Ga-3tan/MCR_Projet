@@ -1,6 +1,5 @@
 package entities;
 
-import entities.ships.Ship;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,13 +12,14 @@ public class Shot extends GameObject {
     private int damage;
 
     /**
+     * Constructeur de Shot
      *
-     * @param spritePath
-     * @param position
-     * @param movementVector
-     * @param size
-     * @param friendly
-     * @param damage
+     * @param spritePath     chemin vers le fichier du sprite
+     * @param position       position actuelle du Shot
+     * @param movementVector vecteur de mouvement (vitesse et direction)
+     * @param size           taille du Shot (carré)
+     * @param friendly       friendliness du shot (vrai si vient du Player)
+     * @param damage         dégat provoqué par le Shot
      */
     public Shot(String spritePath, Point position, Point movementVector, Dimension size, Boolean friendly, int damage) {
         super(spritePath, position, movementVector, size);
@@ -28,8 +28,9 @@ public class Shot extends GameObject {
     }
 
     /**
+     * Constructeur de copie de Shot
      *
-     * @param copy
+     * @param copy instance à copier
      */
     public Shot(Shot copy) {
         super(copy.getSpritePath(), copy.getPosition(), copy.getMovementVector(), copy.getSize());
@@ -37,8 +38,9 @@ public class Shot extends GameObject {
     }
 
     /**
+     * Clone l'instance de Shot (partie du pattern prototype)
      *
-     * @return
+     * @return copie du Shot en tant que GameObject
      */
     @Override
     public GameObject clone() {

@@ -7,26 +7,29 @@ public class Asteroid extends GameObject {
     private static final String SPRITE_PATH = "images/PNG/Meteors/meteorBrown_big1.png";
 
     /**
+     * Constructeur de Asteroid
      *
-     * @param size
-     * @param speed
+     * @param size  taille de l'Asteroid (carré)
+     * @param speed vecteur de mouvement (vitesse et direction)
      */
     public Asteroid(Dimension size, Point speed) {
         // Set la poisiton a (0,0) au départ, puis le randomise dans Controller
-        super(SPRITE_PATH, new Point(0,0), speed, size);
+        super(SPRITE_PATH, new Point(0, 0), speed, size);
     }
 
     /**
+     * Constructeur de copie de Asteroid
      *
-     * @param copy
+     * @param copy instance à copier
      */
     public Asteroid(Asteroid copy) {
         super(copy.getSpritePath(), copy.getPosition(), copy.getMovementVector(), copy.getSize());
     }
 
     /**
+     * Clone l'instance de Asteroid (partie du pattern prototype)
      *
-     * @return
+     * @return copie du Asteroid en tant que GameObject
      */
     @Override
     public GameObject clone() {
