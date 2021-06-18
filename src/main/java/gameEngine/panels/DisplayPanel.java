@@ -8,7 +8,10 @@ import java.awt.*;
 import java.util.List;
 
 public class DisplayPanel extends JPanel {
-    private static final Image BACKGROUND = Toolkit.getDefaultToolkit().getImage("images/backgrounds/background_loop.png");
+    private static final Image BACKGROUND = Toolkit.getDefaultToolkit()
+            .getImage(Thread.currentThread()
+                    .getContextClassLoader()
+                    .getResource("images/backgrounds/background_loop.png"));
     private static final Dimension DIMENTION = new Dimension(512, 1024);
     private static final int BACKGROUND_SPEED = 1;
     private final Controller controller;

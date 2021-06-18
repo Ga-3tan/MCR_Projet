@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.awt.*;
+import java.net.URL;
 import java.util.Random;
 
 @Getter
@@ -29,10 +30,8 @@ abstract public class GameObject {
      * @param size           taille du GameObject
      */
     public GameObject(String spritePath, Point position, Point movementVector, Dimension size) {
-        Toolkit toolkit = Toolkit.getDefaultToolkit();
-        Image image = toolkit.getImage(spritePath).getScaledInstance(size.width, size.height, Image.SCALE_DEFAULT);
         this.spritePath = spritePath;
-        this.sprite = image;
+        this.sprite = getImage(spritePath).getScaledInstance(size.width, size.height, Image.SCALE_DEFAULT);
         this.position = position;
         this.movementVector = movementVector;
         this.size = size;
@@ -111,5 +110,10 @@ abstract public class GameObject {
         } else if (this.getDeltaY() < 0) {
             this.setMovementVector(new Point(0, this.getDeltaY() + 1));
         }
+    }
+
+    private static Image getImage(final String pathAndFileName) {
+        final URL url = Thread.currentThread().getContextClassLoader().getResource(pathAndFileName);
+        return Toolkit.getDefaultToolkit().getImage(url);
     }
 }
