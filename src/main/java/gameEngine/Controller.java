@@ -52,8 +52,7 @@ public class Controller {
     /**
      * Classe Instance pour le singleton
      */
-    private static class Instance
-    {
+    private static class Instance {
         static final Controller instance = new Controller();
     }
 
@@ -112,7 +111,7 @@ public class Controller {
         displayPanel.setLayout(new BorderLayout());
         displayPanel.setBorder(new EmptyBorder(200, 10, 200, 10));
         JButton start = new JButton();
-        customizeButton(start, "images/start.png", actionEvent -> {
+        customizeButton(start, START_IMG_PATH, actionEvent -> {
             run();
             start.setVisible(false);
         });
@@ -141,6 +140,23 @@ public class Controller {
         asteroids.clear();
         shots.clear();
         score = 0;
+    }
+
+    /**
+     * Initialise tous les prototypes
+     */
+    private void initializePrototypes() {
+        // ASTEROIDS
+        asteroidsPrototypes.add(new Asteroid(new Dimension(90, 90), new Point(), new Point(0, 2)));
+        asteroidsPrototypes.add(new Asteroid(new Dimension(75, 75), new Point(), new Point(0, 4)));
+        asteroidsPrototypes.add(new Asteroid(new Dimension(50, 50), new Point(), new Point(0, 2)));
+        asteroidsPrototypes.add(new Asteroid(new Dimension(25, 25), new Point(), new Point(0, 4)));
+
+        // ENEMIES
+        enemiesPrototypes.add(new Enemy(GREEN_ENEMY_PATH,  new Point(), new Point(0, 5), new Dimension(30, 30), 1, 1200, 10, 100));
+        enemiesPrototypes.add(new Enemy(BLUE_ENEMY_PATH,   new Point(), new Point(0, 2), new Dimension(50, 50), 3, 1500, 7, 150));
+        enemiesPrototypes.add(new Enemy(ORANGE_ENEMY_PATH, new Point(), new Point(0, 1), new Dimension(70, 70), 5, 2500, 10, 200));
+        enemiesPrototypes.add(new Enemy(BLACK_ENEMY_PATH,  new Point(), new Point(0, 1), new Dimension(160, 120), 8, 200, 5, 500));
     }
 
     /**
@@ -230,23 +246,6 @@ public class Controller {
         displayPanel.add(restart, BorderLayout.SOUTH);
 
         stopTimers();
-    }
-
-    /**
-     * Initialise tous les prototypes
-     */
-    private void initializePrototypes() {
-        // ASTEROIDS
-        asteroidsPrototypes.add(new Asteroid(new Dimension(90, 90), new Point(), new Point(0, 2)));
-        asteroidsPrototypes.add(new Asteroid(new Dimension(75, 75), new Point(), new Point(0, 4)));
-        asteroidsPrototypes.add(new Asteroid(new Dimension(50, 50), new Point(), new Point(0, 2)));
-        asteroidsPrototypes.add(new Asteroid(new Dimension(25, 25), new Point(), new Point(0, 4)));
-
-        // ENEMIES
-        enemiesPrototypes.add(new Enemy(GREEN_ENEMY_PATH,  new Point(), new Point(0, 5), new Dimension(30, 30), 1, 1200, 10, 100));
-        enemiesPrototypes.add(new Enemy(BLUE_ENEMY_PATH,   new Point(), new Point(0, 2), new Dimension(50, 50), 3, 1500, 7, 150));
-        enemiesPrototypes.add(new Enemy(ORANGE_ENEMY_PATH, new Point(), new Point(0, 1), new Dimension(70, 70), 5, 2500, 10, 200));
-        enemiesPrototypes.add(new Enemy(BLACK_ENEMY_PATH,  new Point(), new Point(0, 1), new Dimension(160, 120), 8, 200, 5, 500));
     }
 
     /**

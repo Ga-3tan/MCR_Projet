@@ -3,11 +3,7 @@ package utils;
 import java.util.Random;
 
 /**
- * Classe permettant de générer un entier aléatoire compris entre 2 bornes
- */
-
-/**
- * Classe permettant de générer un entier aléatoire compris entre 2 bornes
+ * Classe abstraite permettant de générer un entier aléatoire compris entre 2 bornes
  *
  * Name     : RandomGenerator
  * File     : RandomGenerator.java
@@ -20,8 +16,7 @@ import java.util.Random;
  * @version 1.0
  * @since 18.06.2021
  */
-public class RandomGenerator {
-
+public abstract class RandomGenerator {
     /**
      * Génère un entier aléatoire entre 2 bornes.
      *

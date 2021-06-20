@@ -22,6 +22,7 @@ import java.awt.Dimension;
 @Getter
 @Setter
 public class Shot extends GameObject {
+
     private boolean friendly;
     private int damage;
 
@@ -61,5 +62,3 @@ public class Shot extends GameObject {
         return new Shot(this);
     }
 }
-
-// (╯✧▽✧)╯

@@ -7,8 +7,6 @@ import java.awt.Image;
 import java.awt.Point;
 import java.awt.Dimension;
 import java.awt.Rectangle;
-import java.awt.Toolkit;
-import java.net.URL;
 import java.util.Random;
 
 import static utils.ImageManager.getImage;
