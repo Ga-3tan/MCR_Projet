@@ -371,7 +371,7 @@
         <variable const="false" name="actionListener" type="ActionListener"/>
       </method>
     </entity>
-    <entity entityType="CLASS" id="58499" isAbstract="false" name="Instace" visibility="PUBLIC">
+    <entity entityType="CLASS" id="58499" isAbstract="false" name="Instance" visibility="PUBLIC">
       <attribute const="false" defaultValue="" isStatic="true" name="instance" type="Controller" visibility="PACKAGE"/>
     </entity>
   </diagramElements>
@@ -790,11 +790,11 @@
       <line>
         <point>
           <x>531</x>
-          <y>381</y>
+          <y>391</y>
         </point>
         <point>
           <x>461</x>
-          <y>381</y>
+          <y>391</y>
         </point>
       </line>
     </relationView>
