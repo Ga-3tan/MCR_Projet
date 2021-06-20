@@ -5,9 +5,12 @@ import entities.Shot;
 import gameEngine.panels.DisplayPanel;
 import java.awt.Point;
 import java.awt.Dimension;
-import java.awt.Toolkit;
 import java.awt.Image;
 import java.util.Date;
+
+import static utils.AppPaths.DEAD_PLAYER_PATH;
+import static utils.AppPaths.PLAYER_PATH;
+import static utils.ImageManager.getImage;
 
 /**
  * Prototype concret, représente le vaisseau du joueur
@@ -24,8 +27,7 @@ import java.util.Date;
  * @since 18.06.2021
  */
 public class Player extends Ship {
-    private static final String PLAYER_PATH = "images/PNG/playerShip2_green.png";
-    private static final String DEAD_PLAYER_PATH = "images/PNG/Damage/playerShip3_damage3.png";
+
     static final int SHOOT_DELAY = 300;
     static final int SHOOT_SPEED = -12;
 
@@ -57,7 +59,7 @@ public class Player extends Ship {
      * Appelé quand le Player meurt
      */
     public void die() {
-        this.setSprite(Toolkit.getDefaultToolkit().getImage(DEAD_PLAYER_PATH).getScaledInstance(50, 50, Image.SCALE_DEFAULT));
+        this.setSprite(getImage(DEAD_PLAYER_PATH).getScaledInstance(getSize().width, getSize().height, Image.SCALE_DEFAULT));
     }
 
     /**
@@ -107,5 +109,3 @@ public class Player extends Ship {
     }
 
 }
-
-//  ⊂◉‿◉つ

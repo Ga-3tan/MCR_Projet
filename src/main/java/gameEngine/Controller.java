@@ -13,7 +13,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.Point;
 import java.awt.Dimension;
-import java.awt.Toolkit;
 import java.awt.Image;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -28,7 +27,9 @@ import javax.swing.JButton;
 import javax.swing.Timer;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
-import static entities.ships.Enemy.*;
+
+import static utils.AppPaths.*;
+import static utils.ImageManager.getImage;
 import static utils.RandomGenerator.randomInt;
 
 /**
@@ -60,9 +61,7 @@ public class Controller {
     private static final Dimension FRAME_DIMENSION = new Dimension(512, 1074);
     private DisplayPanel displayPanel;
     private InfoPanel infoPanel;
-    private static final String RESTART_IMG_PATH = "images/restart.png";
-    private static final String GAMME_OVER_IMG_PATH = "images/game-over.png";
-    private static final int GAMME_OVER_IMG_SIZE = 400;
+    private static final int GAME_OVER_IMG_SIZE = 400;
 
     private final Set<Integer> activeKeys = new HashSet<>();
     private final List<Timer> timers = new LinkedList<>();
@@ -216,11 +215,7 @@ public class Controller {
     private void gameOver() {
         player.die();
         // Game Over label
-        Image gameOver = Toolkit.getDefaultToolkit()
-                .getImage(Thread.currentThread()
-                        .getContextClassLoader()
-                        .getResource(GAMME_OVER_IMG_PATH))
-                .getScaledInstance(GAMME_OVER_IMG_SIZE, GAMME_OVER_IMG_SIZE, Image.SCALE_FAST);
+        Image gameOver = getImage(GAME_OVER_IMG_PATH).getScaledInstance(GAME_OVER_IMG_SIZE, GAME_OVER_IMG_SIZE, Image.SCALE_FAST);
         JLabel gameOverLabel = new JLabel(new ImageIcon(gameOver));
         // Restart bouton
         JButton restart = new JButton();

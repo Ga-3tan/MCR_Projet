@@ -1,6 +1,25 @@
 <?xml version="1.0" encoding="iso-8859-15" standalone="no"?>
 <classDiagram>
   <diagramElements defaultViewEntities="ALL" defaultViewEnum="true" defaultViewMethods="TYPE_AND_NAME" defaultVisibleTypes="true" informations="" name="MCR_Projet">
+    <entity entityType="CLASS" id="68575" isAbstract="true" name="ImageManager" visibility="PUBLIC">
+      <method isAbstract="false" isStatic="true" name="getImage" returnType="Image" view="DEFAULT" visibility="PUBLIC">
+        <variable const="false" name="pathAndFileName" type="String"/>
+      </method>
+    </entity>
+    <entity entityType="CLASS" id="66327" isAbstract="true" name="AppPaths" visibility="PUBLIC">
+      <attribute const="false" defaultValue="" isStatic="true" name="RED_LASER_PATH" type="String" visibility="PUBLIC"/>
+      <attribute const="false" defaultValue="" isStatic="true" name="GREEN_LASER_PATH" type="String" visibility="PUBLIC"/>
+      <attribute const="false" defaultValue="" isStatic="true" name="BLACK_ENEMY_PATH" type="String" visibility="PUBLIC"/>
+      <attribute const="false" defaultValue="" isStatic="true" name="BLUE_ENEMY_PATH" type="String" visibility="PUBLIC"/>
+      <attribute const="false" defaultValue="" isStatic="true" name="GREEN_ENEMY_PATH" type="String" visibility="PUBLIC"/>
+      <attribute const="false" defaultValue="" isStatic="true" name="ORANGE_ENEMY_PATH" type="String" visibility="PUBLIC"/>
+      <attribute const="false" defaultValue="" isStatic="true" name="PLAYER_PATH" type="String" visibility="PUBLIC"/>
+      <attribute const="false" defaultValue="" isStatic="true" name="DEAD_PLAYER_PATH" type="String" visibility="PUBLIC"/>
+      <attribute const="false" defaultValue="" isStatic="true" name="ASTEROID_PATH" type="String" visibility="PUBLIC"/>
+      <attribute const="false" defaultValue="" isStatic="true" name="START_IMG_PATH" type="String" visibility="PUBLIC"/>
+      <attribute const="false" defaultValue="" isStatic="true" name="RESTART_IMG_PATH" type="String" visibility="PUBLIC"/>
+      <attribute const="false" defaultValue="" isStatic="true" name="GAME_OVER_IMG_PATH" type="String" visibility="PUBLIC"/>
+    </entity>
     <inheritance id="56548">
       <child>50109</child>
       <parent>50107</parent>
@@ -53,7 +72,7 @@
         </multiplicity>
       </role>
     </association>
-    <association aggregation="NONE" direction="FIRST_TO_SECOND" id="56622" name="has a">
+    <association aggregation="NONE" direction="FIRST_TO_SECOND" id="56622" name="manage">
       <role componentId="50098" name="" visibility="PRIVATE">
         <multiplicity>
           <min>1</min>
@@ -67,7 +86,7 @@
         </multiplicity>
       </role>
     </association>
-    <association aggregation="NONE" direction="FIRST_TO_SECOND" id="56609" name="is the owner of a">
+    <association aggregation="NONE" direction="FIRST_TO_SECOND" id="56609" name="can trigger">
       <role componentId="50107" name="" visibility="PRIVATE">
         <multiplicity>
           <min>1</min>
@@ -76,8 +95,8 @@
       </role>
       <role componentId="50106" name="" visibility="PRIVATE">
         <multiplicity>
-          <min>1</min>
-          <max>1</max>
+          <min>2</min>
+          <max>2</max>
         </multiplicity>
       </role>
     </association>
@@ -137,7 +156,7 @@
         </multiplicity>
       </role>
     </association>
-    <association aggregation="NONE" direction="FIRST_TO_SECOND" id="58822" name="has a">
+    <association aggregation="NONE" direction="FIRST_TO_SECOND" id="58822" name="manage">
       <role componentId="50098" name="" visibility="PRIVATE">
         <multiplicity>
           <min>1</min>
@@ -152,13 +171,9 @@
       </role>
     </association>
     <entity entityType="CLASS" id="50109" isAbstract="false" name="Enemy" visibility="PUBLIC">
-      <attribute const="false" defaultValue="" isStatic="true" name="BLACK_ENEMY_PATH" type="String" visibility="PUBLIC"/>
-      <attribute const="false" defaultValue="" isStatic="true" name="BLUE_ENEMY_PATH" type="String" visibility="PUBLIC"/>
-      <attribute const="false" defaultValue="" isStatic="true" name="GREEN_ENEMY_PATH" type="String" visibility="PUBLIC"/>
-      <attribute const="false" defaultValue="" isStatic="true" name="ORANGE_ENEMY_PATH" type="String" visibility="PUBLIC"/>
       <attribute const="false" defaultValue="" isStatic="false" name="lastShotTime" type="long" visibility="PRIVATE"/>
       <attribute const="false" defaultValue="" isStatic="false" name="scoreValue" type="int" visibility="PRIVATE"/>
-      <method isAbstract="false" isStatic="false" name="Enemy" returnType="void" view="DEFAULT" visibility="PUBLIC">
+      <method is-constructor="true" isAbstract="false" isStatic="false" name="Enemy" returnType="" view="DEFAULT" visibility="PUBLIC">
         <variable const="false" name="path" type="String"/>
         <variable const="false" name="position" type="Point"/>
         <variable const="false" name="movementVector" type="Point"/>
@@ -167,25 +182,23 @@
         <variable const="false" name="shoot_delay" type="int"/>
         <variable const="false" name="shoot_speed" type="int"/>
       </method>
-      <method isAbstract="false" isStatic="false" name="Enemy" returnType="void" view="DEFAULT" visibility="PUBLIC">
+      <method is-constructor="true" isAbstract="false" isStatic="false" name="Enemy" returnType="" view="DEFAULT" visibility="PUBLIC">
         <variable const="false" name="enemy" type="Enemy"/>
       </method>
       <method isAbstract="false" isStatic="false" name="clone" returnType="GameObject" view="DEFAULT" visibility="PUBLIC"/>
       <method isAbstract="false" isStatic="false" name="fire" returnType="Shot" view="DEFAULT" visibility="PUBLIC"/>
     </entity>
     <entity entityType="CLASS" id="50108" isAbstract="false" name="Player" visibility="PUBLIC">
-      <attribute const="false" defaultValue="" isStatic="true" name="PLAYER_PATH" type="String" visibility="PRIVATE"/>
-      <attribute const="false" defaultValue="" isStatic="true" name="DEAD_PLAYER_PATH" type="String" visibility="PRIVATE"/>
       <attribute const="false" defaultValue="" isStatic="true" name="SHOOT_DELAY" type="int" visibility="PACKAGE"/>
       <attribute const="false" defaultValue="" isStatic="true" name="SHOOT_SPEED" type="int" visibility="PACKAGE"/>
       <attribute const="false" defaultValue="" isStatic="false" name="lastShotTime" type="long" visibility="PACKAGE"/>
-      <method isAbstract="false" isStatic="false" name="Player" returnType="void" view="DEFAULT" visibility="PUBLIC">
+      <method is-constructor="true" isAbstract="false" isStatic="false" name="Player" returnType="" view="DEFAULT" visibility="PUBLIC">
         <variable const="false" name="position" type="Point"/>
         <variable const="false" name="movementVector" type="Point"/>
         <variable const="false" name="size" type="Dimension"/>
         <variable const="false" name="hp" type="int"/>
       </method>
-      <method isAbstract="false" isStatic="false" name="Player" returnType="void" view="DEFAULT" visibility="PUBLIC">
+      <method is-constructor="true" isAbstract="false" isStatic="false" name="Player" returnType="" view="DEFAULT" visibility="PUBLIC">
         <variable const="false" name="copy" type="Player"/>
       </method>
       <method isAbstract="false" isStatic="false" name="die" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
@@ -196,8 +209,6 @@
       </method>
     </entity>
     <entity entityType="CLASS" id="50107" isAbstract="true" name="Ship" visibility="PUBLIC">
-      <attribute const="false" defaultValue="" isStatic="false" name="RED_LASER_PATH" type="String" visibility="PRIVATE"/>
-      <attribute const="false" defaultValue="" isStatic="false" name="GREEN_LASER_PATH" type="String" visibility="PRIVATE"/>
       <attribute const="false" defaultValue="" isStatic="false" name="hp" type="int" visibility="PRIVATE"/>
       <attribute const="false" defaultValue="" isStatic="false" name="shoot_delay" type="int" visibility="PRIVATE"/>
       <attribute const="false" defaultValue="" isStatic="false" name="shoot_speed" type="int" visibility="PRIVATE"/>
@@ -223,27 +234,26 @@
     <entity entityType="CLASS" id="50106" isAbstract="false" name="Shot" visibility="PUBLIC">
       <attribute const="false" defaultValue="" isStatic="false" name="friendly" type="boolean" visibility="PRIVATE"/>
       <attribute const="false" defaultValue="" isStatic="false" name="damage" type="int" visibility="PRIVATE"/>
-      <method isAbstract="false" isStatic="false" name="Shot" returnType="void" view="DEFAULT" visibility="PUBLIC">
+      <method is-constructor="true" isAbstract="false" isStatic="false" name="Shot" returnType="" view="DEFAULT" visibility="PUBLIC">
         <variable const="false" name="spritePath" type="String"/>
         <variable const="false" name="position" type="Point"/>
         <variable const="false" name="movementVector" type="Point"/>
         <variable const="false" name="size" type="Dimension"/>
         <variable const="false" name="damage" type="int"/>
       </method>
-      <method isAbstract="false" isStatic="false" name="Shot" returnType="void" view="DEFAULT" visibility="PUBLIC">
+      <method is-constructor="true" isAbstract="false" isStatic="false" name="Shot" returnType="" view="DEFAULT" visibility="PUBLIC">
         <variable const="false" name="copy" type="Shot"/>
       </method>
       <method isAbstract="false" isStatic="false" name="clone" returnType="GameObject" view="DEFAULT" visibility="PUBLIC"/>
     </entity>
     <entity entityType="CLASS" id="50105" isAbstract="false" name="Asteroid" visibility="PUBLIC">
-      <attribute const="false" defaultValue="" isStatic="true" name="SPRITE_PATH" type="String" visibility="PRIVATE"/>
-      <method isAbstract="false" isStatic="false" name="Asteroid" returnType="void" view="DEFAULT" visibility="PUBLIC">
+      <method is-constructor="true" isAbstract="false" isStatic="false" name="Asteroid" returnType="" view="DEFAULT" visibility="PUBLIC">
         <variable const="false" name="size" type="Dimension"/>
         <variable const="false" name="position" type="Point"/>
         <variable const="false" name="speed" type="Point"/>
       </method>
-      <method isAbstract="false" isStatic="false" name="Asteroid" returnType="void" view="DEFAULT" visibility="PUBLIC">
-        <variable const="false" name="copy" type="Asteroid"/>
+      <method is-constructor="true" isAbstract="false" isStatic="false" name="Asteroid" returnType="" view="DEFAULT" visibility="PUBLIC">
+        <variable const="false" name="copy" type="Asteroird"/>
       </method>
       <method isAbstract="false" isStatic="false" name="clone" returnType="GameObject" view="DEFAULT" visibility="PUBLIC"/>
     </entity>
@@ -255,7 +265,7 @@
       <attribute const="false" defaultValue="" isStatic="false" name="size" type="Dimension" visibility="PRIVATE"/>
       <attribute const="false" defaultValue="" isStatic="false" name="hitbox" type="Rectangle" visibility="PRIVATE"/>
       <attribute const="false" defaultValue="" isStatic="false" name="rand" type="Random" visibility="PACKAGE"/>
-      <method isAbstract="false" isStatic="false" name="GameObject" returnType="void" view="DEFAULT" visibility="PUBLIC">
+      <method is-constructor="true" isAbstract="true" isStatic="false" name="GameObject" returnType="" view="DEFAULT" visibility="PUBLIC">
         <variable const="false" name="spritePath" type="String"/>
         <variable const="false" name="position" type="Point"/>
         <variable const="false" name="movementVector" type="Point"/>
@@ -269,15 +279,12 @@
       <method isAbstract="false" isStatic="false" name="getDeltaX" returnType="int" view="DEFAULT" visibility="PUBLIC"/>
       <method isAbstract="false" isStatic="false" name="getDeltaY" returnType="int" view="DEFAULT" visibility="PUBLIC"/>
       <method isAbstract="false" isStatic="false" name="slowDown" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
-      <method isAbstract="false" isStatic="true" name="getImage" returnType="Image" view="DEFAULT" visibility="PRIVATE">
-        <variable const="false" name="pathAndFileName" type="String"/>
-      </method>
     </entity>
     <entity entityType="CLASS" id="50103" isAbstract="false" name="InfoPanel" visibility="PUBLIC">
       <attribute const="false" defaultValue="" isStatic="true" name="DIMENSION" type="Dimension" visibility="PRIVATE"/>
       <attribute const="false" defaultValue="" isStatic="false" name="score" type="JLabel" visibility="PRIVATE"/>
       <attribute const="false" defaultValue="" isStatic="false" name="life" type="JLabel" visibility="PRIVATE"/>
-      <method isAbstract="false" isStatic="false" name="InfoPanel" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
+      <method is-constructor="true" isAbstract="false" isStatic="false" name="InfoPanel" returnType="" view="DEFAULT" visibility="PUBLIC"/>
       <method isAbstract="false" isStatic="false" name="paintComponent" returnType="void" view="DEFAULT" visibility="PUBLIC">
         <variable const="false" name="g" type="Graphics"/>
       </method>
@@ -287,7 +294,7 @@
       <attribute const="false" defaultValue="" isStatic="true" name="DIMENSION" type="Dimension" visibility="PRIVATE"/>
       <attribute const="false" defaultValue="" isStatic="true" name="BACKGROUND_SPEED" type="int" visibility="PRIVATE"/>
       <attribute const="false" defaultValue="" isStatic="false" name="backgroundYPositions" type="int[]" visibility="PRIVATE"/>
-      <method isAbstract="false" isStatic="false" name="DisplayPanel" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
+      <method is-constructor="true" isAbstract="false" isStatic="false" name="DisplayPanel" returnType="" view="DEFAULT" visibility="PUBLIC"/>
       <method isAbstract="false" isStatic="false" name="paintComponent" returnType="void" view="DEFAULT" visibility="PUBLIC">
         <variable const="false" name="g" type="Graphics"/>
       </method>
@@ -298,7 +305,7 @@
         <variable const="false" name="args" type="String[]"/>
       </method>
     </entity>
-    <entity entityType="CLASS" id="50100" isAbstract="false" name="RandomGenerator" visibility="PUBLIC">
+    <entity entityType="CLASS" id="50100" isAbstract="true" name="RandomGenerator" visibility="PUBLIC">
       <method isAbstract="false" isStatic="true" name="randomInt" returnType="int" view="DEFAULT" visibility="PUBLIC">
         <variable const="false" name="min" type="int"/>
         <variable const="false" name="max" type="int"/>
@@ -337,25 +344,22 @@
       </method>
     </entity>
     <entity entityType="CLASS" id="50098" isAbstract="false" name="Controller" visibility="PUBLIC">
-      <attribute const="false" defaultValue="" isStatic="true" name="instance" type="Controller" visibility="PRIVATE"/>
       <attribute const="false" defaultValue="" isStatic="false" name="frame" type="JFrame" visibility="PRIVATE"/>
       <attribute const="false" defaultValue="" isStatic="true" name="FRAME_DIMENSION" type="Dimension" visibility="PRIVATE"/>
-      <attribute const="false" defaultValue="" isStatic="true" name="RESTART_IMG_PATH" type="String" visibility="PRIVATE"/>
-      <attribute const="false" defaultValue="" isStatic="true" name="GAMME_OVER_IMG_PATH" type="String" visibility="PRIVATE"/>
-      <attribute const="false" defaultValue="" isStatic="true" name="GAMME_OVER_IMG_SIZE" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="true" name="GAME_OVER_IMG_SIZE" type="int" visibility="PRIVATE"/>
       <attribute const="false" defaultValue="" isStatic="false" name="activeKeys" type="Set&lt;Integer&gt;" visibility="PRIVATE"/>
       <attribute const="false" defaultValue="" isStatic="false" name="timers" type="List&lt;Timer&gt;" visibility="PRIVATE"/>
       <attribute const="false" defaultValue="" isStatic="false" name="player" type="Player" visibility="PRIVATE"/>
       <attribute const="false" defaultValue="" isStatic="false" name="playerMoving" type="boolean" visibility="PRIVATE"/>
       <attribute const="false" defaultValue="" isStatic="false" name="score" type="int" visibility="PRIVATE"/>
-      <method isAbstract="false" isStatic="false" name="Controller" returnType="void" view="DEFAULT" visibility="PRIVATE"/>
-      <method isAbstract="false" isStatic="false" name="initController" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
+      <method is-constructor="true" isAbstract="false" isStatic="false" name="Controller" returnType="" view="DEFAULT" visibility="PRIVATE"/>
+      <method isAbstract="false" isStatic="false" name="initController" returnType="void" view="DEFAULT" visibility="PRIVATE"/>
       <method isAbstract="false" isStatic="false" name="initGame" returnType="void" view="DEFAULT" visibility="PRIVATE"/>
+      <method isAbstract="false" isStatic="false" name="initializePrototypes" returnType="void" view="DEFAULT" visibility="PRIVATE"/>
       <method isAbstract="false" isStatic="false" name="run" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
       <method isAbstract="false" isStatic="false" name="stopTimers" returnType="void" view="DEFAULT" visibility="PRIVATE"/>
       <method isAbstract="false" isStatic="false" name="update" returnType="void" view="DEFAULT" visibility="PRIVATE"/>
       <method isAbstract="false" isStatic="false" name="gameOver" returnType="void" view="DEFAULT" visibility="PRIVATE"/>
-      <method isAbstract="false" isStatic="false" name="initializePrototypes" returnType="void" view="DEFAULT" visibility="PRIVATE"/>
       <method isAbstract="false" isStatic="false" name="spawn" returnType="void" view="DEFAULT" visibility="PRIVATE">
         <variable const="false" name="listPrototypes" type="List&lt;?_extends_GameObject&gt;"/>
         <variable const="false" name="listDestination" type="List&lt;GameObject&gt;"/>
@@ -380,14 +384,14 @@
       <line>
         <point>
           <x>1081</x>
-          <y>771</y>
+          <y>731</y>
         </point>
         <point>
-          <x>1181</x>
-          <y>771</y>
+          <x>1191</x>
+          <y>731</y>
         </point>
         <point>
-          <x>1181</x>
+          <x>1191</x>
           <y>891</y>
         </point>
         <point>
@@ -396,14 +400,14 @@
         </point>
       </line>
       <labelAssociation>
-        <x>1365</x>
-        <y>895</y>
-        <w>32</w>
+        <x>1339</x>
+        <y>896</y>
+        <w>51</w>
         <h>17</h>
       </labelAssociation>
       <roleAssociation>
         <x>1085</x>
-        <y>775</y>
+        <y>735</y>
         <w>0</w>
         <h>17</h>
       </roleAssociation>
@@ -415,7 +419,7 @@
       </roleAssociation>
       <multipliciteAssociation>
         <x>1085</x>
-        <y>748</y>
+        <y>708</y>
         <w>8</w>
         <h>17</h>
       </multipliciteAssociation>
@@ -572,40 +576,40 @@
       <line>
         <point>
           <x>531</x>
-          <y>791</y>
+          <y>721</y>
         </point>
         <point>
-          <x>321</x>
-          <y>791</y>
+          <x>331</x>
+          <y>721</y>
         </point>
       </line>
       <labelAssociation>
-        <x>405</x>
-        <y>794</y>
+        <x>435</x>
+        <y>725</y>
         <w>54</w>
         <h>17</h>
       </labelAssociation>
       <roleAssociation>
-        <x>495</x>
-        <y>795</y>
+        <x>525</x>
+        <y>725</y>
         <w>0</w>
         <h>17</h>
       </roleAssociation>
       <roleAssociation>
-        <x>325</x>
-        <y>795</y>
+        <x>335</x>
+        <y>725</y>
         <w>0</w>
         <h>17</h>
       </roleAssociation>
       <multipliciteAssociation>
-        <x>515</x>
-        <y>764</y>
+        <x>517</x>
+        <y>698</y>
         <w>8</w>
         <h>17</h>
       </multipliciteAssociation>
       <multipliciteAssociation>
-        <x>326</x>
-        <y>763</y>
+        <x>335</x>
+        <y>698</y>
         <w>8</w>
         <h>17</h>
       </multipliciteAssociation>
@@ -622,9 +626,9 @@
         </point>
       </line>
       <labelAssociation>
-        <x>2500</x>
-        <y>542</y>
-        <w>105</w>
+        <x>2519</x>
+        <y>541</y>
+        <w>69</w>
         <h>17</h>
       </labelAssociation>
       <roleAssociation>
@@ -666,7 +670,7 @@
       <labelAssociation>
         <x>1174</x>
         <y>556</y>
-        <w>32</w>
+        <w>51</w>
         <h>17</h>
       </labelAssociation>
       <roleAssociation>
@@ -748,40 +752,40 @@
       <line>
         <point>
           <x>1081</x>
-          <y>671</y>
+          <y>651</y>
         </point>
         <point>
           <x>1731</x>
-          <y>671</y>
+          <y>651</y>
         </point>
       </line>
       <labelAssociation>
         <x>1288</x>
-        <y>677</y>
+        <y>657</y>
         <w>266</w>
         <h>17</h>
       </labelAssociation>
       <roleAssociation>
         <x>1085</x>
-        <y>675</y>
+        <y>655</y>
         <w>0</w>
         <h>17</h>
       </roleAssociation>
       <roleAssociation>
         <x>1725</x>
-        <y>675</y>
+        <y>655</y>
         <w>0</w>
         <h>17</h>
       </roleAssociation>
       <multipliciteAssociation>
         <x>1085</x>
-        <y>648</y>
+        <y>628</y>
         <w>8</w>
         <h>17</h>
       </multipliciteAssociation>
       <multipliciteAssociation>
         <x>1718</x>
-        <y>648</y>
+        <y>628</y>
         <w>7</w>
         <h>17</h>
       </multipliciteAssociation>
@@ -814,7 +818,7 @@
         </point>
         <point>
           <x>2071</x>
-          <y>301</y>
+          <y>286</y>
         </point>
       </line>
     </relationView>
@@ -826,7 +830,7 @@
         </point>
         <point>
           <x>2071</x>
-          <y>301</y>
+          <y>286</y>
         </point>
       </line>
     </relationView>
@@ -846,7 +850,7 @@
         </point>
         <point>
           <x>2071</x>
-          <y>301</y>
+          <y>286</y>
         </point>
       </line>
     </relationView>
@@ -866,7 +870,7 @@
         </point>
         <point>
           <x>2111</x>
-          <y>701</y>
+          <y>671</y>
         </point>
       </line>
     </relationView>
@@ -886,7 +890,7 @@
         </point>
         <point>
           <x>2111</x>
-          <y>701</y>
+          <y>671</y>
         </point>
       </line>
     </relationView>
@@ -903,7 +907,7 @@
         <x>530</x>
         <y>350</y>
         <w>550</w>
-        <h>445</h>
+        <h>400</h>
       </geometry>
     </componentView>
     <componentView color="-2079" componentID="50099" displayAttributes="true" displayDefault="true" displayMethods="true">
@@ -916,8 +920,8 @@
     </componentView>
     <componentView color="-2079" componentID="50100" displayAttributes="true" displayDefault="true" displayMethods="true">
       <geometry>
-        <x>130</x>
-        <y>140</y>
+        <x>2770</x>
+        <y>160</y>
         <w>250</w>
         <h>70</h>
       </geometry>
@@ -940,8 +944,8 @@
     </componentView>
     <componentView color="-2079" componentID="50103" displayAttributes="true" displayDefault="true" displayMethods="true">
       <geometry>
-        <x>70</x>
-        <y>750</y>
+        <x>80</x>
+        <y>700</y>
         <w>250</w>
         <h>130</h>
       </geometry>
@@ -951,15 +955,15 @@
         <x>1790</x>
         <y>20</y>
         <w>560</w>
-        <h>280</h>
+        <h>265</h>
       </geometry>
     </componentView>
     <componentView color="-2079" componentID="50105" displayAttributes="true" displayDefault="true" displayMethods="true">
       <geometry>
         <x>1290</x>
         <y>490</y>
-        <w>330</w>
-        <h>115</h>
+        <w>350</w>
+        <h>100</h>
       </geometry>
     </componentView>
     <componentView color="-2079" componentID="50106" displayAttributes="true" displayDefault="true" displayMethods="true">
@@ -975,7 +979,7 @@
         <x>1730</x>
         <y>480</y>
         <w>750</w>
-        <h>220</h>
+        <h>190</h>
       </geometry>
     </componentView>
     <componentView color="-2079" componentID="50108" displayAttributes="true" displayDefault="true" displayMethods="true">
@@ -983,7 +987,7 @@
         <x>1540</x>
         <y>830</y>
         <w>470</w>
-        <h>220</h>
+        <h>190</h>
       </geometry>
     </componentView>
     <componentView color="-2079" componentID="50109" displayAttributes="true" displayDefault="true" displayMethods="true">
@@ -991,7 +995,23 @@
         <x>2190</x>
         <y>830</y>
         <w>730</w>
-        <h>205</h>
+        <h>145</h>
+      </geometry>
+    </componentView>
+    <componentView color="-2079" componentID="66327" displayAttributes="true" displayDefault="true" displayMethods="true">
+      <geometry>
+        <x>2470</x>
+        <y>30</y>
+        <w>230</w>
+        <h>235</h>
+      </geometry>
+    </componentView>
+    <componentView color="-2079" componentID="68575" displayAttributes="true" displayDefault="true" displayMethods="true">
+      <geometry>
+        <x>2770</x>
+        <y>30</y>
+        <w>280</w>
+        <h>70</h>
       </geometry>
     </componentView>
     <note color="-2079" content="Les classes suivantes n'ont pas été représentées dans le diagramme pour des raisons de lisibilité :">

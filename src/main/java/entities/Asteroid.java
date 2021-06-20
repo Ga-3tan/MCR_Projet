@@ -3,6 +3,8 @@ package entities;
 import java.awt.Point;
 import java.awt.Dimension;
 
+import static utils.AppPaths.ASTEROID_PATH;
+
 /**
  * Prototype concret, représente un astéroide (obstacle pour le joueur)
  *
@@ -19,8 +21,6 @@ import java.awt.Dimension;
  */
 public class Asteroid extends GameObject {
 
-    private static final String SPRITE_PATH = "images/PNG/Meteors/meteorBrown_big1.png";
-
     /**
      * Constructeur de Asteroid
      *
@@ -28,7 +28,7 @@ public class Asteroid extends GameObject {
      * @param speed vecteur de mouvement (vitesse et direction)
      */
     public Asteroid(Dimension size, Point position, Point speed) {
-        super(SPRITE_PATH, position, speed, size);
+        super(ASTEROID_PATH, position, speed, size);
     }
 
     /**

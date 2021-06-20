@@ -11,6 +11,8 @@ import java.awt.Toolkit;
 import java.net.URL;
 import java.util.Random;
 
+import static utils.ImageManager.getImage;
+
 /**
  * Objet de jeu aparaissant à l'écran.
  * Implémente le pattern prototype (représente le prototype abstrait) et
@@ -118,15 +120,5 @@ abstract public class GameObject {
         } else if (this.getDeltaY() < 0) {
             this.setMovementVector(new Point(0, this.getDeltaY() + 1));
         }
-    }
-
-    /**
-     * Permet d'obtenir un objet Image depuis le dossier ressources
-     * @param pathAndFileName le chemin de l'image depuis le dossier resources
-     * @return L'objet Image récupéré
-     */
-    private static Image getImage(final String pathAndFileName) {
-        final URL url = Thread.currentThread().getContextClassLoader().getResource(pathAndFileName);
-        return Toolkit.getDefaultToolkit().getImage(url);
     }
 }

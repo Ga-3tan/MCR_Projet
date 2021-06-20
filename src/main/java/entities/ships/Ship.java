@@ -6,6 +6,9 @@ import lombok.Getter;
 import java.awt.Point;
 import java.awt.Dimension;
 
+import static utils.AppPaths.GREEN_LASER_PATH;
+import static utils.AppPaths.RED_LASER_PATH;
+
 /**
  * Prototype concret, représente un vaisseau du jeu
  *
@@ -22,15 +25,14 @@ import java.awt.Dimension;
  */
 @Getter
 abstract public class Ship extends GameObject {
-    private final String RED_LASER_PATH = "images/PNG/Lasers/laserRed13.png";
-    private final String GREEN_LASER_PATH = "images/PNG/Lasers/laserGreen03.png";
+
+    //Shots Prototypes
+    protected final Shot greenLaser = new Shot(GREEN_LASER_PATH, new Point(), new Point(), new Dimension(4, 15), 1);
+    protected final Shot redLaser = new Shot(RED_LASER_PATH, new Point(), new Point(), new Dimension(4, 15),  1);
 
     private int hp;
     private final int shoot_delay;
     private final int shoot_speed;
-
-    protected final Shot greenLaser = new Shot(GREEN_LASER_PATH, new Point(), new Point(), new Dimension(4, 15), 1);
-    protected final Shot redLaser = new Shot(RED_LASER_PATH, new Point(), new Point(), new Dimension(4, 15),  1);
 
     /**
      * Constructeur de la classe abstraite Ship
