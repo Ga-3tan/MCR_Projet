@@ -14,7 +14,7 @@ import static utils.ImageManager.getImage;
 /**
  * Objet de jeu aparaissant à l'écran.
  * Implémente le pattern prototype (représente le prototype abstrait) et
- * possède donc la méthode abstraite  clone
+ * possède donc la méthode abstraite clone
  *
  * Name     : GameObject
  * File     : GameObject.java

@@ -369,11 +369,7 @@ public class Controller {
      *                       ce que le bouton effectue sur un évènement
      */
     private void customizeButton(JButton button, String iconPath, ActionListener actionListener) {
-        Image icon = Toolkit.getDefaultToolkit()
-                .getImage(Thread.currentThread()
-                        .getContextClassLoader()
-                        .getResource(iconPath))
-                .getScaledInstance(200, 70, Image.SCALE_FAST);
+        Image icon = getImage(iconPath).getScaledInstance(200, 70, Image.SCALE_FAST);
         button.setIcon(new ImageIcon(icon));
         button.setBackground(new Color(58, 46, 53));
         button.setFocusable(false);
