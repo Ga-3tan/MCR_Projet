@@ -86,16 +86,6 @@ abstract public class GameObject {
     }
 
     /**
-     * Donne une valeur aléatoire sur l'axe X
-     *
-     * @param frameWidth larger de la zone d'apparition
-     */
-    public void randomizePositionOnX(int frameWidth) {
-        int x = rand.nextInt(frameWidth + getSize().width) - getSize().width;
-        this.setPosition(new Point(x, -getSize().height));
-    }
-
-    /**
      * Retourne le X la vitesse/direction
      *
      * @return X du vecteur de mouvement
