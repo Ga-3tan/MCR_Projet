@@ -295,7 +295,6 @@ public class Controller {
 
             @Override
             public void keyReleased(KeyEvent e) {
-                System.out.println(activeKeys);
                 activeKeys.remove(e.getKeyCode());
                 playerMoving = false;
             }
