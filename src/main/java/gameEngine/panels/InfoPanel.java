@@ -25,16 +25,13 @@ import java.awt.Graphics;
 public class InfoPanel extends JPanel {
 
     private static final Dimension DIMENSION = new Dimension(576, 50);
-    private final Controller controller;
-    JLabel score;
-    JLabel life;
+    private final JLabel score;
+    private final JLabel life;
 
     /**
      * Paint le Component
-     * @param controller
      */
-    public InfoPanel(Controller controller) {
-        this.controller = controller;
+    public InfoPanel() {
 
         // Configure le panel
         setBackground(Color.BLACK);
@@ -45,7 +42,7 @@ public class InfoPanel extends JPanel {
 
         // Configure les zones de texte
         life = new JLabel("LIVES : 10" , JLabel.CENTER);
-        score = new JLabel("SCORE : " + controller.getScore(), JLabel.CENTER);
+        score = new JLabel("SCORE : " + Controller.getInstance().getScore(), JLabel.CENTER);
         life.setForeground(Color.WHITE);
         score.setForeground(Color.WHITE);
 
@@ -62,8 +59,8 @@ public class InfoPanel extends JPanel {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        life.setText("LIVES : " + controller.getPlayer().getHp());
-        score.setText("SCORE : " + controller.getScore());
+        life.setText("LIVES : " + Controller.getInstance().getPlayer().getHp());
+        score.setText("SCORE : " + Controller.getInstance().getScore());
 
     }
 }

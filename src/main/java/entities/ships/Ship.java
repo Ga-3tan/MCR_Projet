@@ -29,8 +29,8 @@ abstract public class Ship extends GameObject {
     private final int shoot_delay;
     private final int shoot_speed;
 
-    protected final Shot greenLaser = new Shot(GREEN_LASER_PATH, new Point(), new Point(), new Dimension(4, 15), null, 1);
-    protected final Shot redLaser = new Shot(RED_LASER_PATH, new Point(), new Point(), new Dimension(4, 15), null, 1);
+    protected final Shot greenLaser = new Shot(GREEN_LASER_PATH, new Point(), new Point(), new Dimension(4, 15), 1);
+    protected final Shot redLaser = new Shot(RED_LASER_PATH, new Point(), new Point(), new Dimension(4, 15),  1);
 
     /**
      * Constructeur de la classe abstraite Ship

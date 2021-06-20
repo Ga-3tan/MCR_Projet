@@ -50,6 +50,7 @@ public class Player extends Ship {
      */
     public Player(Player copy) {
         super(PLAYER_PATH, copy.getPosition(), copy.getMovementVector(), copy.getSize(), copy.getHp(), copy.getShoot_delay(), copy.getShoot_speed());
+        this.lastShotTime = 0;
     }
 
     /**
@@ -82,9 +83,8 @@ public class Player extends Ship {
 
             Shot shot = (Shot) greenLaser.clone();
             shot.setFriendly(true);
-            shot.setMovementVector(new Point(0, -12)); // 0, -12 => va vers le haut
+            shot.setMovementVector(new Point(0, -12));
             shot.setPosition(new Point(this.getPosition().x + (int) (this.getSize().getWidth() / 2), this.getPosition().y));
-            shot.setDamage(1);
 
             return shot;
         } else {

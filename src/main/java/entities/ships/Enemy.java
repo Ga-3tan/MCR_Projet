@@ -56,6 +56,7 @@ public class Enemy extends Ship {
     public Enemy(Enemy enemy) {
         super(enemy.getSpritePath(), enemy.getPosition(), enemy.getMovementVector(), enemy.getSize(), enemy.getHp(), enemy.getShoot_delay(), enemy.getShoot_speed());
         this.scoreValue = enemy.scoreValue;
+        this.lastShotTime = 0;
     }
 
     /**
@@ -81,9 +82,8 @@ public class Enemy extends Ship {
 
             Shot shot = (Shot) redLaser.clone();
             shot.setFriendly(false);
-            shot.setMovementVector(new Point(0, getShoot_speed())); // 0, 7 => va vers le bas
+            shot.setMovementVector(new Point(0, getShoot_speed())); 
             shot.setPosition(new Point(this.getPosition().x + (int) (this.getSize().getWidth() / 2), (int) (this.getPosition().y + this.getSize().getHeight())));
-            shot.setDamage(1);
 
             return shot;
         } else {

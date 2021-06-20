@@ -24,4 +24,3 @@ public class SpaceShooter {
     }
 }
 
-// ಠ_ಠ

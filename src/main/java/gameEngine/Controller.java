@@ -48,30 +48,33 @@ import static utils.RandomGenerator.randomInt;
  */
 public class Controller {
 
-    private static Controller instance;
+    /**
+     * Classe Instance pour le singleton
+     */
+    private static class Instance
+    {
+        static final Controller instance = new Controller();
+    }
 
     private final JFrame frame = new JFrame();
     private static final Dimension FRAME_DIMENSION = new Dimension(512, 1074);
-    private final DisplayPanel displayPanel = new DisplayPanel(this);
-    private final InfoPanel infoPanel = new InfoPanel(this);
+    private DisplayPanel displayPanel;
+    private InfoPanel infoPanel;
     private static final String RESTART_IMG_PATH = "images/restart.png";
     private static final String GAMME_OVER_IMG_PATH = "images/game-over.png";
     private static final int GAMME_OVER_IMG_SIZE = 400;
 
     private final Set<Integer> activeKeys = new HashSet<>();
-    private List<Timer> timers = new LinkedList<>();
+    private final List<Timer> timers = new LinkedList<>();
 
     // Elements du jeu
     private Player player;
-    private final int playerSize = 50;
-    private final Point playerInitPosition = new Point(231, 920);
-    private final int playerHp = 5;
     private boolean playerMoving;
     private int score;
 
     //List of game objects
     private final LinkedList<GameObject> enemies = new LinkedList<>();
-    private final LinkedList<GameObject> decorElements = new LinkedList<>();
+    private final LinkedList<GameObject> asteroids = new LinkedList<>();
     private final LinkedList<GameObject> shots = new LinkedList<>();
 
     // Prototypes
@@ -83,22 +86,28 @@ public class Controller {
      *
      * @return l'instance unique du Controller
      */
-    public static Controller getInstance() {
-        if (instance == null)
-            instance = new Controller();
-
-        return instance;
+    public static Controller getInstance()
+    {
+        return Instance.instance;
     }
 
     /**
      * Constructeur privé du Controller (privé car Controller = Singleton)
      */
     private Controller() {
+    }
+
+    /**
+     * Démarre les éléments du jeu
+     */
+    public void initController(){
         initGame();
 
         // Initialise les frames et panels
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
+        displayPanel = new DisplayPanel();
+        infoPanel = new InfoPanel();
         frame.add(infoPanel, BorderLayout.NORTH);
         frame.add(displayPanel, BorderLayout.CENTER);
         displayPanel.setLayout(new BorderLayout());
@@ -119,17 +128,18 @@ public class Controller {
 
         // Initialise le timer de jeu
         timers.add(new Timer(17, evt -> update()));
-        timers.add(new Timer(10000, evt -> spawnAsteroids()));
-        timers.add(new Timer(4000, evt -> spawnEnemies()));
+        timers.add(new Timer(10000, evt -> spawn(asteroidsPrototypes, asteroids)));
+        timers.add(new Timer(4000, evt -> spawn(enemiesPrototypes, enemies)));
+
     }
 
     /**
      * Initialise le jeu
      */
     private void initGame() {
-        this.player = new Player(playerInitPosition, new Point(0, 0), new Dimension(playerSize, playerSize), playerHp);
+        this.player = new Player(new Point(231, 920), new Point(0, 0),  new Dimension(50, 50), 5);
         enemies.clear();
-        decorElements.clear();
+        asteroids.clear();
         shots.clear();
         score = 0;
     }
@@ -156,7 +166,7 @@ public class Controller {
     private void update() {
 
         // Freine le joueur
-        if (!playerMoving) // TODO sûr de la condition ?
+        if (!playerMoving)
             player.slowDown();
 
         // Mouvements des GameObjects
@@ -169,15 +179,15 @@ public class Controller {
         }
         for (GameObject shot : shots)
             shot.move();
-        for (GameObject decor : decorElements)
+        for (GameObject decor : asteroids)
             decor.move();
 
         // Applique les mouvements
         applyKeys();
 
         // Collisions
-        Collision.shotsCollisions(shots, decorElements, enemies, player);
-        Collision.playerCollisions(player, decorElements, enemies);
+        Collision.shotsCollisions(shots, asteroids, enemies, player);
+        Collision.playerCollisions(player, asteroids, enemies);
 
         // Game over
         if (player.getHp() <= 0) {
@@ -192,7 +202,7 @@ public class Controller {
             return out;
         });
         enemies.removeIf(enemy -> enemy.isOutOf(displayPanel));
-        decorElements.removeIf(decor -> decor.isOutOf(displayPanel));
+        asteroids.removeIf(decor -> decor.isOutOf(displayPanel));
         shots.removeIf(shot -> shot.isOutOf(displayPanel));
 
         // Update affichage
@@ -232,42 +242,29 @@ public class Controller {
      */
     private void initializePrototypes() {
         // ASTEROIDS
-        asteroidsPrototypes.add(new Asteroid(new Dimension(90, 90), new Point(0, 2)));
-        asteroidsPrototypes.add(new Asteroid(new Dimension(75, 75), new Point(0, 4)));
-        asteroidsPrototypes.add(new Asteroid(new Dimension(50, 50), new Point(0, 2)));
-        asteroidsPrototypes.add(new Asteroid(new Dimension(25, 25), new Point(0, 4)));
+        asteroidsPrototypes.add(new Asteroid(new Dimension(90, 90), new Point(), new Point(0, 2)));
+        asteroidsPrototypes.add(new Asteroid(new Dimension(75, 75), new Point(), new Point(0, 4)));
+        asteroidsPrototypes.add(new Asteroid(new Dimension(50, 50), new Point(), new Point(0, 2)));
+        asteroidsPrototypes.add(new Asteroid(new Dimension(25, 25), new Point(), new Point(0, 4)));
 
         // ENEMIES
-        enemiesPrototypes.add(new Enemy(GREEN_ENEMY_PATH, new Point(0, 0), new Point(0, 5), new Dimension(30, 30), 1, 1200, 10, 100));
-        enemiesPrototypes.add(new Enemy(BLUE_ENEMY_PATH, new Point(0, 0), new Point(0, 2), new Dimension(50, 50), 3, 1500, 7, 150));
-        enemiesPrototypes.add(new Enemy(ORANGE_ENEMY_PATH, new Point(0, 0), new Point(0, 1), new Dimension(70, 70), 5, 2500, 10, 200));
-        enemiesPrototypes.add(new Enemy(BLACK_ENEMY_PATH, new Point(0, 0), new Point(0, 1), new Dimension(160, 120), 8, 200, 5, 500));
+        enemiesPrototypes.add(new Enemy(GREEN_ENEMY_PATH,  new Point(), new Point(0, 5), new Dimension(30, 30), 1, 1200, 10, 100));
+        enemiesPrototypes.add(new Enemy(BLUE_ENEMY_PATH,   new Point(), new Point(0, 2), new Dimension(50, 50), 3, 1500, 7, 150));
+        enemiesPrototypes.add(new Enemy(ORANGE_ENEMY_PATH, new Point(), new Point(0, 1), new Dimension(70, 70), 5, 2500, 10, 200));
+        enemiesPrototypes.add(new Enemy(BLACK_ENEMY_PATH,  new Point(), new Point(0, 1), new Dimension(160, 120), 8, 200, 5, 500));
     }
 
     /**
-     * Créer des clones des prototypes d'enemies de maniere aleatoire
+     * Créer des clones de prototypes de position X aleatoire
+     * @param listPrototypes La liste des protitypes à cloner
+     * @param listDestination La liste de GameObject ou placer le clone
      */
-    private void spawnEnemies() {
-        // Récupère un enemi au hasard depuis la liste de prototypes d'enemis (enemiesProtype)
-        int index = randomInt(0, enemiesPrototypes.size() - 1);
-        GameObject copy = enemiesPrototypes.get(index).clone();
-
-        // Modifie les coordonnées de x de maniere aleatoire
-        int x = randomInt(50, frame.getWidth() - copy.getSize().width);
+    private void spawn(List<? extends GameObject> listPrototypes, List<GameObject> listDestination) {
+        int index = randomInt(0, listPrototypes.size() - 1);
+        GameObject copy = listPrototypes.get(index).clone();
+        int x = randomInt(0, frame.getWidth() - copy.getSize().width);
         copy.setPosition(new Point(x, 0));
-
-        //Ajoute dans la liste d'enemies
-        enemies.add(copy);
-    }
-
-    /**
-     * Créer des clones des prototypes d'asteroides de maniere aleatoire
-     */
-    private void spawnAsteroids() {
-        int index = randomInt(0, asteroidsPrototypes.size() - 1);
-        GameObject copy = asteroidsPrototypes.get(index).clone();
-        copy.randomizePositionOnX(frame.getWidth());
-        decorElements.add(copy);
+        listDestination.add(copy);
     }
 
     /**
@@ -285,7 +282,7 @@ public class Controller {
     }
 
     /**
-     * Bouge le joueur lors de la pression d'une touche TODO
+     * Bouge le joueur lors de la pression d'une touche
      */
     public void movePlayer() {
         // Gestion
@@ -363,7 +360,7 @@ public class Controller {
      */
     public List<GameObject> getAllGameObjects() {
         List<GameObject> gameObjects = new LinkedList<>();
-        gameObjects.addAll(decorElements);
+        gameObjects.addAll(asteroids);
         gameObjects.add(player);
         gameObjects.addAll(enemies);
         gameObjects.addAll(shots);

@@ -33,16 +33,12 @@ public class DisplayPanel extends JPanel {
             .getResource("images/backgrounds/background_loop.png"));
     private static final Dimension DIMENSION = new Dimension(512, 1024);
     private static final int BACKGROUND_SPEED = 1;
-    private final Controller controller;
     private final int[] backgroundYPositions = new int[2];
 
     /**
      * Constructeur du DisplayPanel
-     *
-     * @param controller
      */
-    public DisplayPanel(Controller controller) {
-        this.controller = controller;
+    public DisplayPanel() {
         setBackground(Color.BLACK);
         setLayout(new BorderLayout());
 
@@ -66,7 +62,7 @@ public class DisplayPanel extends JPanel {
         updateBackgroundPositions();
 
         // Displays all the game objects
-        List<GameObject> gameObjects = controller.getAllGameObjects();
+        List<GameObject> gameObjects = Controller.getInstance().getAllGameObjects();
 
         for (GameObject o : gameObjects) {
             g.drawImage(o.getSprite(), o.getPosition().x, o.getPosition().y, this);

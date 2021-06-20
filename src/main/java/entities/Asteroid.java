@@ -27,9 +27,8 @@ public class Asteroid extends GameObject {
      * @param size  taille de l'Asteroid
      * @param speed vecteur de mouvement (vitesse et direction)
      */
-    public Asteroid(Dimension size, Point speed) {
-        // Set la poisiton a (0,0) au départ, puis le randomise dans Controller
-        super(SPRITE_PATH, new Point(0, 0), speed, size);
+    public Asteroid(Dimension size, Point position, Point speed) {
+        super(SPRITE_PATH, position, speed, size);
     }
 
     /**

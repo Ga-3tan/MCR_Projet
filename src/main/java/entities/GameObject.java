@@ -82,8 +82,7 @@ abstract public class GameObject {
      * @return vrai si le Player est hors des limites verticale du displayPanel
      */
     public boolean isOutOf(DisplayPanel displayPanel) {
-        return this.getPosition().getY() > displayPanel.getHeight()/*
-                || this.getPosition().getY() < 0*/;
+        return this.getPosition().getY() > displayPanel.getHeight();
     }
 
     /**

@@ -22,7 +22,7 @@ import java.awt.Dimension;
 @Getter
 @Setter
 public class Shot extends GameObject {
-    private Boolean friendly;
+    private boolean friendly;
     private int damage;
 
     /**
@@ -32,13 +32,12 @@ public class Shot extends GameObject {
      * @param position       position actuelle du Shot
      * @param movementVector vecteur de mouvement (vitesse et direction)
      * @param size           taille du Shot
-     * @param friendly       friendliness du shot (vrai si vient du Player)
      * @param damage         dégat provoqué par le Shot
      */
-    public Shot(String spritePath, Point position, Point movementVector, Dimension size, Boolean friendly, int damage) {
-        super(spritePath, position, movementVector, size);
-        this.friendly = friendly;
+    public Shot(String spritePath, Point position, Point movementVector, Dimension size, int damage) {
+        super(spritePath,  position, movementVector, size);
         this.damage = damage;
+        this.friendly = false;
     }
 
     /**
@@ -49,6 +48,7 @@ public class Shot extends GameObject {
     public Shot(Shot copy) {
         super(copy.getSpritePath(), copy.getPosition(), copy.getMovementVector(), copy.getSize());
         this.friendly = copy.friendly;
+        this.damage = copy.damage;
     }
 
     /**

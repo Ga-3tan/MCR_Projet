@@ -79,7 +79,7 @@ public abstract class Collision {
      * @return vrai s'il y a collision
      */
     private static boolean shotEnemyCollision(Shot shot, LinkedList<GameObject> shots, LinkedList<GameObject> enemies) {
-        if (shot.getFriendly()) {
+        if (shot.isFriendly()) {
             for (GameObject enemy : enemies) {
                 if (enemy.getHitbox().intersects(shot.getHitbox())) {
                     ((Enemy) enemy).reduceHP(shot.getDamage());
@@ -98,7 +98,7 @@ public abstract class Collision {
      * @return vrai s'il y a collision
      */
     private static boolean shotPlayerCollision(Shot shot, LinkedList<GameObject> shots, Player player) {
-        if (!shot.getFriendly() && player.getHitbox().intersects(shot.getHitbox())) {
+        if (!shot.isFriendly() && player.getHitbox().intersects(shot.getHitbox())) {
             player.reduceHP(shot.getDamage());
             shots.remove(shot);
             return true;
